@@ -1,8 +1,10 @@
- "use client";
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as Separator from "@radix-ui/react-separator";
+import Image from "next/image";
+import Logo from "../logo.png";
 
 const navItems = [
   { href: "/", label: "Overview" },
@@ -16,10 +18,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-zinc-200/80 bg-background/80 backdrop-blur-md dark:border-zinc-800/80">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-emerald-400 text-xs font-semibold text-white shadow-sm">
-            FA
-          </div>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src={Logo}
+            alt="Federis AI logo"
+            width={36}
+            height={36}
+            className="rounded-full"
+            priority
+          />
           <div className="flex flex-col">
             <span className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
               Federis AI
@@ -28,7 +35,7 @@ export default function Header() {
               Applied AI for regulated finance
             </span>
           </div>
-        </div>
+        </Link>
 
         <nav className="flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-300">
           {navItems.map((item) => {
