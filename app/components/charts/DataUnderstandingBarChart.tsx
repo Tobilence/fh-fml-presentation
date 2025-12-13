@@ -24,6 +24,8 @@ export type DataUnderstandingSplit =
 interface DataUnderstandingBarChartProps {
   dataset: Dataset;
   split: DataUnderstandingSplit;
+  height?: number;
+  showHeader?: boolean;
 }
 
 type Row = {
@@ -96,6 +98,8 @@ async function getData(dataset: Dataset, split: DataUnderstandingSplit): Promise
 export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps> = ({
   dataset,
   split,
+  height = 320,
+  showHeader = true,
 }) => {
   const [data, setData] = React.useState<Row[]>([]);
 
@@ -116,10 +120,12 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
   }, [dataset, split]);
 
   return (
-    <div style={{ width: "100%", height: 320, paddingBottom: 25  }}>
-      <div style={{ fontSize: 14, marginBottom: 8, opacity: 0.85 }}>
-        Title: {dataset} — {split}
-      </div>
+    <div style={{ width: "100%", height, paddingBottom: 25 }}>
+      {showHeader ? (
+        <div style={{ fontSize: 14, marginBottom: 8, opacity: 0.85 }}>
+          Title: {dataset} — {split}
+        </div>
+      ) : null}
 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>

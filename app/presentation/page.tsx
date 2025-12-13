@@ -1,7 +1,9 @@
 "use client";
 
+import React from "react";
 import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/utils/supabase/client";
+import { DataExplorationSlide } from "./DataExplorationSlide";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
 const PRESENTATION_LIVE_TYPE = "presentation-live";
@@ -12,6 +14,22 @@ export default function PresentationPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null);
+
+  const slideNode = React.useMemo(() => {
+    const statusComponentMap: Record<number, React.ReactNode> = {
+      0: <DataExplorationSlide />,
+      // add more statuses here as needed, e.g. 1: <OtherComponent />
+    };
+
+    if (
+      status !== null &&
+      Object.prototype.hasOwnProperty.call(statusComponentMap, status)
+    ) {
+      return statusComponentMap[status];
+    }
+
+    return <div>No slide to show for status {String(status)}.</div>;
+  }, [status]);
 
   useEffect(() => {
     let cancelled = false;
@@ -33,7 +51,7 @@ export default function PresentationPage() {
           return;
         }
 
-        const nextStatus = data?.[0]?.status;
+        const nextStatus = +data?.[0]?.status;
         setStatus(typeof nextStatus === "number" ? nextStatus : null);
         setError(null);
         setLastUpdatedAt(Date.now());
@@ -57,29 +75,15 @@ export default function PresentationPage() {
 
   return (
     <main style={{ padding: 16, fontFamily: "ui-sans-serif, system-ui" }}>
-      <h1 style={{ marginBottom: 8 }}>Presentation (live)</h1>
-
       {error ? (
         <div style={{ color: "crimson", whiteSpace: "pre-wrap" }}>
           Error: {error}
         </div>
-      ) : isLoading ? (
-        <div>Loading...</div>
-      ) : (
+      ) :(
         <div>
-          Current status:{" "}
-          <span style={{ fontWeight: 700 }}>
-            {status === null ? "null" : status}
-          </span>
+          {slideNode}
         </div>
       )}
-
-      <div style={{ marginTop: 8, opacity: 0.7, fontSize: 12 }}>
-        Polling every {POLL_INTERVAL_MS / 1000}s.{" "}
-        {lastUpdatedAt ? (
-          <>Last updated: {new Date(lastUpdatedAt).toLocaleTimeString()}</>
-        ) : null}
-      </div>
     </main>
   );
 }
