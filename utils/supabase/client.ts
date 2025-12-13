@@ -1,4 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+
+let browserSupabaseClient: SupabaseClient | null = null;
 
 export function createBrowserSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -12,7 +14,17 @@ export function createBrowserSupabaseClient() {
     );
   }
 
-  return createClient(supabaseUrl, supabaseKey);
+  // Avoid "Multiple GoTrueClient instances detected" by reusing a single
+  // Supabase client instance in the browser.
+  if (typeof window === "undefined") {
+    return createClient(supabaseUrl, supabaseKey);
+  }
+
+  if (!browserSupabaseClient) {
+    browserSupabaseClient = createClient(supabaseUrl, supabaseKey);
+  }
+
+  return browserSupabaseClient;
 }
 
 

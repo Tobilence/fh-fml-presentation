@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
 import { ExploratoryDataAnalysisSection } from "@/app/components/experiment/ExploratoryDataAnalysisSection";
 import { ModelDevelopmentSection } from "@/app/components/experiment/ModelDevelopmentSection";
+import { ModelFinetuningSection } from "@/app/components/experiment/ModelFinetuningSection";
+import { ModelEvaluationSection } from "@/app/components/experiment/ModelEvaluationSection";
 
 export default function ExperimentPage() {
     return (
@@ -83,77 +84,9 @@ export default function ExperimentPage() {
 
             <ModelDevelopmentSection />
 
-            <section className="grid gap-8 border-t border-zinc-200/80 pt-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] dark:border-zinc-800/80">
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                            4 · Model Finetuning
-                        </h2>
-                        <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                            Here you walk through how you tuned the model: which knobs you
-                            touched, which trade-offs you explored, and how SHAP plots or
-                            other diagnostics informed your final choices.
-                        </p>
-                    </div>
-                </div>
+            <ModelFinetuningSection />
 
-                <div className="space-y-3 rounded-2xl border border-zinc-200/80 bg-white p-5 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                        Finetuning runs & SHAP insights
-                    </div>
-                    <div className="mt-2 h-48 rounded-xl border border-dashed border-zinc-300/80 bg-gradient-to-r from-emerald-100 via-sky-100 to-zinc-100/80 dark:border-zinc-700/80 dark:from-emerald-950 dark:via-sky-950 dark:to-zinc-950/80 sm:h-60 md:h-72" />
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                        Use this space to show comparisons between runs, hyperparameter
-                        sweeps, or SHAP-based insights that led to the final tuning
-                        decisions.
-                    </p>
-                </div>
-            </section>
-
-            <section className="grid gap-8 border-t border-zinc-200/80 pt-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] dark:border-zinc-800/80">
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                            5 · Evaluation
-                        </h2>
-                        <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                            Summarise how you evaluated the models: which metrics you chose,
-                            how you compared versions, and how to read the SHAP plots, bar
-                            charts, or other diagnostics you are about to show.
-                        </p>
-                    </div>
-                    <div className="grid gap-4 sm:grid-cols-3">
-                        <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                            <div className="mb-1 text-[11px] font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-300">
-                                Metrics
-                            </div>
-                            <p className="text-zinc-600 dark:text-zinc-300">
-                                Core KPIs (e.g. AUC, precision/recall, business value) and how
-                                they compare to the baseline.
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                            <div className="mb-1 text-[11px] font-medium uppercase tracking-wide text-amber-600 dark:text-amber-300">
-                                Robustness
-                            </div>
-                            <p className="text-zinc-600 dark:text-zinc-300">
-                                How the model behaves across time, segments, or stress
-                                scenarios.
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-zinc-200/80 bg-white p-4 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                            <div className="mb-1 text-[11px] font-medium uppercase tracking-wide text-zinc-600 dark:text-zinc-300">
-                                Fairness & policy checks
-                            </div>
-                            <p className="text-zinc-600 dark:text-zinc-300">
-                                Where you explicitly checked for bias, thresholds, or other
-                                policy-relevant behaviour.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+            <ModelEvaluationSection />
 
             <section className="gap-8 border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
                 <div className="space-y-4">
