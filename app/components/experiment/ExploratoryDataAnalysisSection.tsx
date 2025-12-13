@@ -12,7 +12,7 @@ export function ExploratoryDataAnalysisSection() {
     const datasetOptions = React.useMemo(
         () =>
             [
-                { value: "All", label: "Overall" },
+                { value: "Overall", label: "Overall" },
                 { value: "Bank A", label: "Bank A" },
                 { value: "Bank B", label: "Bank B" },
                 { value: "Bank C", label: "Bank C" },
@@ -32,7 +32,7 @@ export function ExploratoryDataAnalysisSection() {
         [],
     );
 
-    const [dataset, setDataset] = React.useState<Dataset>("All");
+    const [dataset, setDataset] = React.useState<Dataset>("Overall");
     const [split, setSplit] = React.useState<DataUnderstandingSplit>("Education");
 
     return (
@@ -54,15 +54,15 @@ export function ExploratoryDataAnalysisSection() {
                         <strong>capital losses</strong>,{" "}
                         <strong>hours worked per week</strong>). With data from multiple
                         institutions (
-                        <span className="font-semibold text-blue-700 dark:text-blue-300">
+                        <span className="font-semibold text-blue-700 dark:text-blue-300 cursor-pointer" onClick={() => setDataset("Bank A")}>
                             Bank A
                         </span>
                         ,{" "}
-                        <span className="font-semibold text-blue-700 dark:text-blue-300">
+                        <span className="font-semibold text-blue-700 dark:text-blue-300 cursor-pointer" onClick={() => setDataset("Bank B")}>
                             Bank B
                         </span>
                         ,{" "}
-                        <span className="font-semibold text-blue-700 dark:text-blue-300">
+                        <span className="font-semibold text-blue-700 dark:text-blue-300 cursor-pointer" onClick={() => setDataset("Bank C")}>
                             Bank C
                         </span>
                         ), we can compare performance across banks and assess how well a
@@ -166,11 +166,11 @@ export function ExploratoryDataAnalysisSection() {
                                 <ul className="ml-5 list-disc space-y-1">
                                     <li>
                                         Each bank contains substantially more{" "}
-                                        <span className="font-semibold text-blue-700 dark:text-blue-300">
+                                        <span className="font-semibold text-blue-700 dark:text-blue-300 cursor-pointer" onClick={() => setSplit("Gender")}>
                                             male
                                         </span>{" "}
                                         than{" "}
-                                        <span className="font-semibold text-pink-600 dark:text-pink-300">
+                                        <span className="font-semibold text-pink-600 dark:text-pink-300 cursor-pointer" onClick={() => setSplit("Gender")}>
                                             female
                                         </span>{" "}
                                         customers, and the positive outcome (
@@ -291,39 +291,34 @@ export function ExploratoryDataAnalysisSection() {
                     </div>
 
                     <div>
-                        <div className="grid gap-3 sm:grid-cols-3">
-                            <div className="rounded-xl border border-zinc-200/80 bg-zinc-50 p-3 dark:border-zinc-800/80 dark:bg-zinc-900/60">
-                                <div className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
-                                    Features overview
-                                </div>
-                                <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-300">
-                                    Same schema across banks: education, work signals,
-                                    marital status, capital gains/losses, and sensitive
-                                    attributes (e.g., gender, race).
-                                </p>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                        <div className="rounded-xl border border-amber-500/40 bg-amber-50 p-3 dark:border-amber-500/40 dark:bg-amber-950/35">
+                            <div className="text-[11px] font-medium text-amber-800 dark:text-amber-200">
+                                Skewed Labels Across Banks
                             </div>
-
-                            <div className="rounded-xl border border-emerald-500/40 bg-emerald-50 p-3 dark:border-emerald-500/40 dark:bg-emerald-950/40">
-                                <div className="text-[11px] font-medium text-emerald-700 dark:text-emerald-200">
-                                    Per-client profiling (Bank A/B/C)
-                                </div>
-                                <p className="mt-1 text-xs text-emerald-900 dark:text-emerald-50">
-                                    We compare client sizes, label distributions, and key
-                                    feature distributions to make non-IID visible.
-                                </p>
-                            </div>
-
-                            <div className="rounded-xl border border-zinc-200/80 bg-zinc-50 p-3 dark:border-zinc-800/80 dark:bg-zinc-900/60">
-                                <div className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
-                                    Risk / governance notes
-                                </div>
-                                <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-300">
-                                    We check sensitive-attribute representation and base rates
-                                    per client, and document any definition/quality differences
-                                    that could impact fairness or calibration.
-                                </p>
-                            </div>
+                            <p className="mt-1 text-xs text-amber-950/90 dark:text-amber-50/90">
+                                Class balance varies strongly by institution, so results and thresholds won’t transfer 1:1 between banks without careful comparison.
+                            </p>
                         </div>
+
+                        <div className="rounded-xl border border-rose-500/40 bg-rose-50 p-3 dark:border-rose-500/40 dark:bg-rose-950/35">
+                            <div className="text-[11px] font-medium text-rose-800 dark:text-rose-200">
+                                Sensitive-Group Representation Imbalance
+                            </div>
+                            <p className="mt-1 text-xs text-rose-950/90 dark:text-rose-50/90">
+                                Gender and race are unevenly represented and have different positive rates, which can drive unequal errors and outcomes.
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl border border-violet-500/40 bg-violet-50 p-3 dark:border-violet-500/40 dark:bg-violet-950/35">
+                            <div className="text-[11px] font-medium text-violet-800 dark:text-violet-200">
+                                Highly Skewed Financial Indicators
+                            </div>
+                            <p className="mt-1 text-xs text-violet-950/90 dark:text-violet-50/90">
+                                Capital gain/loss features are dominated by zeros with rare extreme values, which can disproportionately influence learning and predictions.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

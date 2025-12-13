@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ExploratoryDataAnalysisSection } from "@/app/components/experiment/ExploratoryDataAnalysisSection";
+import { ModelDevelopmentSection } from "@/app/components/experiment/ModelDevelopmentSection";
 
 export default function ExperimentPage() {
     return (
@@ -80,40 +81,31 @@ export default function ExperimentPage() {
 
             <ExploratoryDataAnalysisSection />
 
-            <section className="grid gap-8 border-t border-zinc-200/80 pt-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-start dark:border-zinc-800/80">
-                <div className="space-y-4 text-xs sm:text-sm">
-                    <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        3 · Model Development
-                    </h2>
-                    <p className="text-zinc-600 dark:text-zinc-300">
-                        Use this section to describe{" "}
-                        <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                            how you moved from idea to concrete models
-                        </span>
-                        : which baselines you tried, what advanced approaches you tested,
-                        and how this fits into your normal development workflow.
-                    </p>
-                    <ul className="list-disc space-y-1.5 pl-4 text-xs text-zinc-600 dark:text-zinc-300">
-                        <li>Baseline models that set expectations and provide a fallback.</li>
-                        <li>More complex candidates you explored and why.</li>
-                        <li>Any tooling you used (notebooks, experiment tracker, CI/CD).</li>
-                    </ul>
+            <ModelDevelopmentSection />
+
+            <section className="grid gap-8 border-t border-zinc-200/80 pt-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] dark:border-zinc-800/80">
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+                            4 · Model Finetuning
+                        </h2>
+                        <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                            Here you walk through how you tuned the model: which knobs you
+                            touched, which trade-offs you explored, and how SHAP plots or
+                            other diagnostics informed your final choices.
+                        </p>
+                    </div>
                 </div>
 
                 <div className="space-y-3 rounded-2xl border border-zinc-200/80 bg-white p-5 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                    <div className="flex items-center justify-between">
-                        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                            Architecture & training view
-                        </div>
-                        <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                            Replace with notebooks / architecture
-                        </span>
+                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
+                        Finetuning runs & SHAP insights
                     </div>
-                    <div className="mt-1 h-52 rounded-xl border border-dashed border-zinc-300/90 bg-gradient-to-br from-zinc-50 via-zinc-100 to-zinc-200/70 dark:border-zinc-700/80 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900/80 sm:h-64 md:h-72" />
+                    <div className="mt-2 h-48 rounded-xl border border-dashed border-zinc-300/80 bg-gradient-to-r from-emerald-100 via-sky-100 to-zinc-100/80 dark:border-zinc-700/80 dark:from-emerald-950 dark:via-sky-950 dark:to-zinc-950/80 sm:h-60 md:h-72" />
                     <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                        Drop in a high-level view of model choices here: baseline vs
-                        advanced model, architectures, or a screenshot from your notebook
-                        or experiment tracking tool.
+                        Use this space to show comparisons between runs, hyperparameter
+                        sweeps, or SHAP-based insights that led to the final tuning
+                        decisions.
                     </p>
                 </div>
             </section>
@@ -122,7 +114,7 @@ export default function ExperimentPage() {
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                            4 · Evaluation
+                            5 · Evaluation
                         </h2>
                         <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                             Summarise how you evaluated the models: which metrics you chose,
@@ -162,32 +154,6 @@ export default function ExperimentPage() {
                 </div>
             </section>
 
-            <section className="grid gap-8 border-t border-zinc-200/80 pt-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] dark:border-zinc-800/80">
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                            5 · Model Finetuning
-                        </h2>
-                        <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                            Here you walk through how you tuned the model: which knobs you
-                            touched, which trade-offs you explored, and how SHAP plots or
-                            other diagnostics informed your final choices.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="space-y-3 rounded-2xl border border-zinc-200/80 bg-white p-5 text-xs dark:border-zinc-800/80 dark:bg-zinc-950/40">
-                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                        Finetuning runs & SHAP insights
-                    </div>
-                    <div className="mt-2 h-48 rounded-xl border border-dashed border-zinc-300/80 bg-gradient-to-r from-emerald-100 via-sky-100 to-zinc-100/80 dark:border-zinc-700/80 dark:from-emerald-950 dark:via-sky-950 dark:to-zinc-950/80 sm:h-60 md:h-72" />
-                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                        Use this space to show comparisons between runs, hyperparameter
-                        sweeps, or SHAP-based insights that led to the final tuning
-                        decisions.
-                    </p>
-                </div>
-            </section>
 
             <section className="gap-8 border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
                 <div className="space-y-4">

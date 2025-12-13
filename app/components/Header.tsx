@@ -11,6 +11,7 @@ const navItems = [
   { href: "/", label: "Overview" },
   { href: "/experiment", label: "Experiment" },
   { href: "/model-cards", label: "Model cards" },
+  { href: "/presentation", label: "Presentation" },
 ];
 
 export default function Header() {

@@ -11,8 +11,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { createBrowserSupabaseClient } from "@/utils/supabase/client";
 
-export type Dataset = "Bank A" | "Bank B" | "Bank C" | "All";
+export type Dataset = "Bank A" | "Bank B" | "Bank C" | "Overall";
 export type DataUnderstandingSplit =
   | "Education"
   | "Marital Status"
@@ -25,56 +26,94 @@ interface DataUnderstandingBarChartProps {
   split: DataUnderstandingSplit;
 }
 
-type DummyRow = {
+type Row = {
   group: string;
   yes: number;
   no: number;
 };
 
-function getDummyData(split: DataUnderstandingSplit): DummyRow[] {
+function getSplitColumn(split: DataUnderstandingSplit) {
   switch (split) {
     case "Education":
-      return [
-        { group: "Primary", yes: 28, no: 72 },
-        { group: "Secondary", yes: 41, no: 59 },
-        { group: "Tertiary", yes: 52, no: 48 },
-        { group: "Unknown", yes: 18, no: 82 },
-      ];
+      return "education";
     case "Marital Status":
-      return [
-        { group: "Single", yes: 46, no: 54 },
-        { group: "Married", yes: 33, no: 67 },
-        { group: "Divorced", yes: 39, no: 61 },
-      ];
+      return "marital-status";
     case "Age":
-      return [
-        { group: "18–29", yes: 44, no: 56 },
-        { group: "30–44", yes: 38, no: 62 },
-        { group: "45–59", yes: 31, no: 69 },
-        { group: "60+", yes: 27, no: 73 },
-      ];
+      return "age_bin";
     case "Gender":
-      return [
-        { group: "Female", yes: 42, no: 58 },
-        { group: "Male", yes: 34, no: 66 },
-      ];
+      return "gender";
     case "Race":
-      return [
-        { group: "Group A", yes: 36, no: 64 },
-        { group: "Group B", yes: 48, no: 52 },
-        { group: "Group C", yes: 29, no: 71 },
-        { group: "Group D", yes: 41, no: 59 },
-      ];
-    default:
-      return [];
+      return "race";
   }
+}
+
+async function getData(dataset: Dataset, split: DataUnderstandingSplit): Promise<Row[]> {
+  const supabase = createBrowserSupabaseClient();
+  const splitColumn = getSplitColumn(split);
+
+  // Equivalent SQL (example for splitColumn="education"):
+  // SELECT income_num, education, count(*) AS count
+  // FROM adult_income
+  // WHERE instance = 'Bank A' -- skipped for dataset = 'All'
+  // GROUP BY income_num, education
+  let query = supabase
+    .from("adult_income")
+    .select(`income_num, ${splitColumn}, count:count()`)
+
+  if (dataset !== "Overall") {
+    query = query.eq("institute", dataset);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error("Failed to load adult_income grouped data:", error);
+    return [];
+  }
+
+  const byGroup: Record<string, Row> = {};
+
+  for (const r of data ?? []) {
+    const groupValue = String((r as any)[splitColumn] ?? "Unknown");
+    const incomeNum = Number((r as any).income_num);
+    const count = Number((r as any).count ?? 0);
+
+    const existing = byGroup[groupValue] ?? { group: groupValue, yes: 0, no: 0 };
+
+    if (incomeNum === 1) existing.yes += count;
+    else existing.no += count;
+
+    byGroup[groupValue] = existing;
+  }
+
+  return Object.values(byGroup).sort((a, b) => {
+    const totalA = a.yes + a.no;
+    const totalB = b.yes + b.no;
+    if (totalB !== totalA) return totalB - totalA; // highest total first
+    return a.group.localeCompare(b.group); // stable tie-breaker
+  });
 }
 
 export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps> = ({
   dataset,
   split,
 }) => {
-  const data = React.useMemo(() => getDummyData(split), [split]);
+  const [data, setData] = React.useState<Row[]>([]);
+
+  React.useEffect(() => {
+    let active = true;
+
+    (async () => {
+      const rows = await getData(dataset, split);
+      if (active) setData(rows);
+    })().catch((e) => {
+      console.error("Failed to load chart data:", e);
+      if (active) setData([]);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [dataset, split]);
 
   return (
     <div style={{ width: "100%", height: 320, paddingBottom: 25  }}>
