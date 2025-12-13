@@ -34,6 +34,10 @@ type Row = {
   no: number;
 };
 
+function sleep(ms: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms));
+}
+
 function getSplitColumn(split: DataUnderstandingSplit) {
   switch (split) {
     case "Education":
@@ -53,24 +57,38 @@ async function getData(dataset: Dataset, split: DataUnderstandingSplit): Promise
   const supabase = createBrowserSupabaseClient();
   const splitColumn = getSplitColumn(split);
 
-  // Equivalent SQL (example for splitColumn="education"):
-  // SELECT income_num, education, count(*) AS count
-  // FROM adult_income
-  // WHERE instance = 'Bank A' -- skipped for dataset = 'All'
-  // GROUP BY income_num, education
-  let query = supabase
-    .from("adult_income")
-    .select(`income_num, ${splitColumn}, count:count()`)
+  const maxAttempts = 3; // 1 initial + 2 retries
+  const backoffMs = [250, 750];
 
-  if (dataset !== "Overall") {
-    query = query.eq("institute", dataset);
+  let data: unknown[] | null = null;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    let query = supabase
+      .from("adult_income")
+      .select(`income_num, ${splitColumn}, count:count()`);
+
+    if (dataset !== "Overall") {
+      query = query.eq("institute", dataset);
+    }
+
+    const res = await query;
+
+    if (!res.error) {
+      data = (res.data ?? []) as unknown[];
+      break;
+    }
+
+    console.error(
+      `Failed to load adult_income grouped data (attempt ${attempt}/${maxAttempts}):`,
+      res.error
+    );
+
+    if (attempt < maxAttempts) {
+      await sleep(backoffMs[Math.min(attempt - 1, backoffMs.length - 1)] ?? 500);
+    }
   }
 
-  const { data, error } = await query;
-  if (error) {
-    console.error("Failed to load adult_income grouped data:", error);
-    return [];
-  }
+  if (!data) return [];
 
   const byGroup: Record<string, Row> = {};
 
