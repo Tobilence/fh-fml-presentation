@@ -1,7 +1,7 @@
 import React from "react";
 import { ModelCard, type ModelCardData } from "../model-cards/ModelCard";
 
-const SAMPLE_MODEL: ModelCardData = {
+const GLOBAL_MODEL: ModelCardData = {
   name: "Federated Neural Network",
   variant: "Global model",
   status: "Active",
@@ -64,7 +64,63 @@ const SAMPLE_MODEL: ModelCardData = {
   monitoring: "Track drift + fairness metrics per bank and per subgroup.",
 };
 
-export function ModelCardSlide() {
+const BANK_A_MODEL: ModelCardData = {
+  ...GLOBAL_MODEL,
+  variant: "Local model (Bank A)",
+  stage: "Staging",
+  owner: "Bank A",
+  trainingWindow: "Historical dataset (bank A only)",
+  description:
+    "A locally trained neural network using only Bank A's dataset (baseline / comparison).",
+  validations: [
+    {
+      ...GLOBAL_MODEL.validations[0],
+      performance: {
+        accuracy: 0.80,
+        precision: 0.60,
+        recall: 0.69,
+        f1: 0.64,
+        auc: 0.84,
+      },
+    },
+  ],
+  riskNotes:
+    "Single-bank bias risk: may underperform on other banks due to distribution shift.",
+  monitoring: "Monitor drift + fairness; expect higher volatility with local data.",
+};
+
+const BANK_B_MODEL: ModelCardData = {
+  ...GLOBAL_MODEL,
+  variant: "Local model (Bank B)",
+  stage: "Staging",
+  owner: "Bank B",
+  trainingWindow: "Historical dataset (bank B only)",
+  description:
+    "A locally trained neural network using only Bank B's dataset (baseline / comparison).",
+  validations: [
+    {
+      ...GLOBAL_MODEL.validations[0],
+      performance: {
+        accuracy: 0.79,
+        precision: 0.59,
+        recall: 0.66,
+        f1: 0.62,
+        auc: 0.83,
+      },
+    },
+  ],
+  riskNotes:
+    "Single-bank bias risk: may generalize poorly outside Bank B's population.",
+  monitoring: "Monitor drift + fairness; compare against global model regularly.",
+};
+
+function ModelCardSlideFrame({
+  subtitle,
+  model,
+}: {
+  subtitle: string;
+  model: ModelCardData;
+}) {
   return (
     <section className="w-full py-3 sm:py-4">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
@@ -77,14 +133,29 @@ export function ModelCardSlide() {
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
                 Model card
               </h2>
+              <div className="text-sm text-zinc-600 dark:text-zinc-300">
+                {subtitle}
+              </div>
             </header>
 
             <div className="mt-6 flex-1">
-              <ModelCard model={SAMPLE_MODEL} layout="horizontal" />
+              <ModelCard model={model} layout="horizontal" />
             </div>
           </div>
         </div>
       </div>
     </section>
   );
+}
+
+export function ModelCardSlide() {
+  return <ModelCardSlideFrame subtitle="Global model" model={GLOBAL_MODEL} />;
+}
+
+export function ModelCardSlideBankA() {
+  return <ModelCardSlideFrame subtitle="Local model (Bank A)" model={BANK_A_MODEL} />;
+}
+
+export function ModelCardSlideBankB() {
+  return <ModelCardSlideFrame subtitle="Local model (Bank B)" model={BANK_B_MODEL} />;
 }
