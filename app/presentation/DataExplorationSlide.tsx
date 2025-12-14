@@ -44,9 +44,20 @@ export function DataExplorationSlide() {
             <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
                 Data Exploration
             </h2>
-            <p className="mt-2 max-w-prose text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                Explore the data between the different banks.
+            <p className="mt-2 max-w-full text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              Explore how the data differs across banks. Pay special attention to the following distributional differences:
             </p>
+            <ul className="ml-5 mt-2 list-disc text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              <li>
+                <strong>Gender</strong> is unevenly distributed (males are advantaged).
+              </li>
+              <li>
+                <strong>Education</strong> is split unevenly across banks (Bank A is much more educated).
+              </li>
+              <li>
+                <strong>Race</strong>: Whites are privileged and overrepresented in all banks.
+              </li>
+            </ul>
           </div>
           <div className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
             {dataset} · {split}
