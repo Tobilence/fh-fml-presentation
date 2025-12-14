@@ -1,6 +1,7 @@
 "use client";
 
 import { ExploratoryDataAnalysisSection } from "@/app/components/experiment/ExploratoryDataAnalysisSection";
+import { FederatedLearningContent } from "@/app/components/experiment/FederatedLearningContent";
 import { ModelDevelopmentSection } from "@/app/components/experiment/ModelDevelopmentSection";
 import { ModelFinetuningSection } from "@/app/components/experiment/ModelFinetuningSection";
 import { ModelEvaluationSection } from "@/app/components/experiment/ModelEvaluationSection";
@@ -88,10 +89,12 @@ export default function ExperimentPage() {
 
             <ModelEvaluationSection />
 
+            <FederatedLearningContent />
+
             <section className="gap-8 border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
                 <div className="space-y-4">
                     <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        6 · Findings
+                        7 · Findings
                     </h2>
                     <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                         Close by summarising what this experiment actually taught you:
@@ -133,7 +136,7 @@ export default function ExperimentPage() {
             <section className="gap-8 border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
                 <div className="space-y-4">
                     <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        7 · Recommendation
+                        8 · Recommendation
                     </h2>
                     <p className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                         Close by summarising what this experiment actually taught you:

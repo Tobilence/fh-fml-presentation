@@ -29,17 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen`}
       >
-        <div className="flex min-h-screen flex-col">
-          <Theme accentColor="gray" radius="small">
-            <Header />
-            <main className="flex-1 bg-gradient-to-b from-zinc-50 via-white to-zinc-100/80 px-4 py-10 dark:from-black dark:via-zinc-950 dark:to-zinc-900/80 sm:px-6">
-                {children}
-            </main>
-            <Footer />
-          </Theme>
-        </div>
+        <Theme accentColor="gray" radius="small" className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1 min-h-0 bg-gradient-to-b from-zinc-50 via-white to-zinc-100/80 px-4 py-10 dark:from-black dark:via-zinc-950 dark:to-zinc-900/80 sm:px-6">
+            {children}
+          </main>
+          <Footer />
+        </Theme>
       </body>
     </html>
   );

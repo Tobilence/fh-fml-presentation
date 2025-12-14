@@ -11,54 +11,33 @@ export function BusinessCase() {
                 Federated Machine Learning · Business case 
               </div>
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-                Better models across institutions—without sharing raw customer
-                data
+                Does Federated Learning make sense for you?
               </h2>
               <p className="max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-base">
-                Train collaboratively while keeping data local to meet privacy,
-                data residency, and governance constraints.
+                Potential upsides of federated machine learning: learn from more data without moving raw data—while staying within privacy, residency, and governance constraints.
               </p>
             </header>
 
             <div className="mt-6 flex-1">
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+                Potential Upsides
+              </div>
               <ul className="grid gap-4 md:grid-cols-2">
                 <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800">
                   <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-                    Privacy &amp; compliance
-                  </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Raw data stays local; share only model updates (optionally
-                    secure aggregation &amp; differential privacy).
+                    Keep data where it is
                   </div>
                 </li>
 
                 <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800">
                   <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-                    Better detection
-                  </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Learn broader patterns (rare events, new fraud tactics)
-                    through “network effects”.
+                    Better generalization
                   </div>
                 </li>
 
                 <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800">
                   <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-                    Lower risk &amp; cost
-                  </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Reduce data movement, duplication, and exposure from large
-                    centralized data lakes.
-                  </div>
-                </li>
-
-                <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800">
-                  <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-                    Faster time-to-value
-                  </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Reuse existing stacks; onboard subsidiaries/partners
-                    incrementally.
+                    Collaboration without sharing raw data
                   </div>
                 </li>
 
@@ -66,20 +45,21 @@ export function BusinessCase() {
                   <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
                     Governance-friendly
                   </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Clear audit trail (what trained where), controllable
-                    participation, and policy enforcement.
-                  </div>
                 </li>
 
-                <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800">
+              <div className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+              Up Next
+              </div>
+
+                <li className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800 md:col-span-2">
                   <div className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-                    Pragmatic rollout
+                    Proof of Concept: Federated vs. Local Training
                   </div>
-                  <div className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Start with 2–3 entities + one high-value model; measure lift
-                    and overhead before scaling.
-                  </div>
+                  <ul className="mt-2 grid gap-1 text-sm text-zinc-600 dark:text-zinc-300 sm:grid-cols-3">
+                    <li>Same dataset split across sites</li>
+                    <li>Train: local-only vs federated</li>
+                    <li>Compare: performance &amp; overhead</li>
+                  </ul>
                 </li>
               </ul>
             </div>

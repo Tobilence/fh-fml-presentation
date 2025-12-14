@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/utils/supabase/client";
 import { DataExplorationSlide } from "./DataExplorationSlide";
 import { BusinessCase } from "./BusinessCase";
+import { ModelDevelopment } from "./ModelDevelopment";
+import { ModelFinetuning } from "./ModelFinetuning";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
 const PRESENTATION_LIVE_TYPE = "presentation-live";
@@ -20,6 +22,8 @@ export default function PresentationPage() {
     const statusComponentMap: Record<number, React.ReactNode> = {
       0: <BusinessCase />,
       1: <DataExplorationSlide />,
+      2: <ModelDevelopment />,
+      3: <ModelFinetuning />,
     };
 
     if (
