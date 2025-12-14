@@ -7,6 +7,7 @@ import { DataExplorationSlide } from "./DataExplorationSlide";
 import { BusinessCase } from "./BusinessCase";
 import { ModelDevelopment } from "./ModelDevelopment";
 import { ModelFinetuning } from "./ModelFinetuning";
+import { ModelCardSlide } from "./ModelCardSlide";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
 const PRESENTATION_LIVE_TYPE = "presentation-live";
@@ -24,6 +25,7 @@ export default function PresentationPage() {
       1: <DataExplorationSlide />,
       2: <ModelDevelopment />,
       3: <ModelFinetuning />,
+      4: <ModelCardSlide />,
     };
 
     if (
