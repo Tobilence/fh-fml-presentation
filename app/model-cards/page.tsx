@@ -1,5 +1,7 @@
 
-const models = [
+import { ModelCard, type ModelCardData } from "./ModelCard";
+
+const models: ModelCardData[] = [
   {
     name: "NN · Retail PD v2.0",
     variant: "Champion",
@@ -10,33 +12,107 @@ const models = [
     size: "~180 features · 4 hidden layers",
     trainingWindow: "Applications 2021–2023",
     lastTrained: "2024‑03‑15",
-    infra: "PyTorch on‑prem · nightly batch scoring",
+    infra: "TensorFlow on‑prem · nightly batch scoring",
     description:
       "Main production network used to predict 12‑month probability of default for new‑to‑bank retail customers.",
     architecture: [
       "Input: ~180 engineered features (behavioural, bureau, application)",
-      "Dense(256) · ReLU · BatchNorm",
-      "Dense(128) · ReLU · Dropout(0.3)",
-      "Dense(64) · ReLU",
+      "Dense(32) · ReLU",
+      "Dense(32) · ReLU",
       "Output: 1 · sigmoid (12‑month PD 0–1)",
     ],
+    validations: [
+      {
+        label: "Validation 1",
+        performance: {
+          auc: 0.87,
+          accuracy: 0.81,
+          precision: 0.62,
+          recall: 0.58,
+          f1: 0.60,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.10,
+            statisticalParity: 0.14,
+            predictiveParity: 0.08,
+          },
+          postprocessed: {
+            equalizedOdds: 0.07,
+            statisticalParity: 0.10,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+      {
+        label: "Validation 2",
+        performance: {
+          auc: 0.86,
+          accuracy: 0.80,
+          precision: 0.61,
+          recall: 0.57,
+          f1: 0.59,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.11,
+            statisticalParity: 0.15,
+            predictiveParity: 0.09,
+          },
+          postprocessed: {
+            equalizedOdds: 0.08,
+            statisticalParity: 0.11,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+      {
+        label: "Validation 3",
+        performance: {
+          auc: 0.88,
+          accuracy: 0.82,
+          precision: 0.63,
+          recall: 0.59,
+          f1: 0.61,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.09,
+            statisticalParity: 0.13,
+            predictiveParity: 0.08,
+          },
+          postprocessed: {
+            equalizedOdds: 0.07,
+            statisticalParity: 0.10,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+    ],
     metrics: [
-      { label: "AUC (validation)", value: "0.87" },
       { label: "AUC (out‑of‑time)", value: "0.84" },
       { label: "KS statistic", value: "42" },
     ],
     technical: {
-      framework: "PyTorch 2.x",
-      loss: "Binary cross‑entropy with logits",
-      optimizer: "Adam",
-      learningRate: "1e‑3 with cosine decay",
-      batchSize: "1024",
-      epochs: "30 (early stopping patience 5)",
+      framework: "TensorFlow (Keras)",
+      loss: "binary_crossentropy",
+      optimizer: "adam",
+      learningRate: "1e‑3",
+      batchSize: "512",
+      epochs: "10",
+      finalModelParams: `{
+  "epochs": 10,
+  "batch_size": 512,
+  "layer_units": (32, 32),
+  "optimizer": "adam",
+  "learning_rate": 1e-3,
+  "loss": "binary_crossentropy"
+}`,
       preprocessing:
         "Impute missing values, cap outliers at P99, standardise numeric features, target‑encode high‑cardinality categoricals.",
       postprocessing:
-        "Isotonic calibration on validation set; map PD into 10 internal risk bands for decision rules.",
-      regularisation: "Dropout 0.3 on hidden layers, L2 weight decay 1e‑4, early stopping on validation AUC.",
+        "Optional fairness postprocessing (threshold adjustment) can be enabled for evaluation; calibration and banding handled downstream.",
+      regularisation: "Early stopping on validation AUC; standard weight decay as needed.",
     },
     fairness:
       "Fairness review completed on key protected segments; no critical issues identified, but higher rejection rates in young renters segment.",
@@ -59,27 +135,102 @@ const models = [
       "Smaller benchmark network used for back‑testing and to provide more interpretable odds and feature effects.",
     architecture: [
       "Input: ~80 hand‑picked features (no complex interactions)",
-      "Dense(64) · ReLU",
-      "Dense(32) · ReLU · Dropout(0.2)",
+      "Dense(32) · ReLU",
+      "Dense(32) · ReLU",
       "Output: 1 · sigmoid (PD 0–1)",
     ],
+    validations: [
+      {
+        label: "Validation 1",
+        performance: {
+          auc: 0.81,
+          accuracy: 0.76,
+          precision: 0.55,
+          recall: 0.52,
+          f1: 0.54,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.08,
+            statisticalParity: 0.11,
+            predictiveParity: 0.07,
+          },
+          postprocessed: {
+            equalizedOdds: 0.06,
+            statisticalParity: 0.09,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+      {
+        label: "Validation 2",
+        performance: {
+          auc: 0.80,
+          accuracy: 0.75,
+          precision: 0.54,
+          recall: 0.51,
+          f1: 0.53,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.09,
+            statisticalParity: 0.12,
+            predictiveParity: 0.08,
+          },
+          postprocessed: {
+            equalizedOdds: 0.07,
+            statisticalParity: 0.10,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+      {
+        label: "Validation 3",
+        performance: {
+          auc: 0.82,
+          accuracy: 0.77,
+          precision: 0.56,
+          recall: 0.53,
+          f1: 0.55,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.08,
+            statisticalParity: 0.11,
+            predictiveParity: 0.07,
+          },
+          postprocessed: {
+            equalizedOdds: 0.06,
+            statisticalParity: 0.09,
+            predictiveParity: 0.06,
+          },
+        },
+      },
+    ],
     metrics: [
-      { label: "AUC (validation)", value: "0.81" },
       { label: "AUC (out‑of‑time)", value: "0.79" },
       { label: "KS statistic", value: "34" },
     ],
     technical: {
-      framework: "Keras / TensorFlow 2.x",
-      loss: "Binary cross‑entropy",
-      optimizer: "Adam",
-      learningRate: "3e‑4 fixed",
+      framework: "TensorFlow (Keras)",
+      loss: "binary_crossentropy",
+      optimizer: "adam",
+      learningRate: "1e‑3",
       batchSize: "512",
-      epochs: "40 (early stopping patience 8)",
+      epochs: "10",
+      finalModelParams: `{
+  "epochs": 10,
+  "batch_size": 512,
+  "layer_units": (32, 32),
+  "optimizer": "adam",
+  "learning_rate": 1e-3,
+  "loss": "binary_crossentropy"
+}`,
       preprocessing:
         "Simple scaling of numeric features, one‑hot encoding for low‑cardinality categoricals, no target encoding.",
       postprocessing:
-        "Platt scaling; PDs rounded to basis points and fed into legacy decision engine.",
-      regularisation: "Dropout 0.2, L2 weight decay 5e‑5.",
+        "Optional fairness postprocessing (threshold adjustment) can be enabled for evaluation; calibration handled downstream.",
+      regularisation: "Standard regularisation as needed (e.g., early stopping / weight decay).",
     },
     fairness:
       "More stable approval rates across age and tenure segments; used as reference when explaining uplift from non‑linear models.",
@@ -102,27 +253,102 @@ const models = [
       "Deliberately constrained network used in workshops with business and risk to discuss cut‑offs, calibration, and treatment strategies.",
     architecture: [
       "Input: ~40 aggregated features (score bands, utilisation, income)",
-      "Dense(64) · ReLU",
+      "Dense(32) · ReLU",
       "Dense(32) · ReLU",
       "Output: 1 · sigmoid (calibrated PD)",
     ],
+    validations: [
+      {
+        label: "Validation 1",
+        performance: {
+          auc: 0.78,
+          accuracy: 0.72,
+          precision: 0.50,
+          recall: 0.48,
+          f1: 0.49,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.07,
+            statisticalParity: 0.10,
+            predictiveParity: 0.06,
+          },
+          postprocessed: {
+            equalizedOdds: 0.06,
+            statisticalParity: 0.09,
+            predictiveParity: 0.05,
+          },
+        },
+      },
+      {
+        label: "Validation 2",
+        performance: {
+          auc: 0.77,
+          accuracy: 0.71,
+          precision: 0.49,
+          recall: 0.47,
+          f1: 0.48,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.08,
+            statisticalParity: 0.11,
+            predictiveParity: 0.07,
+          },
+          postprocessed: {
+            equalizedOdds: 0.06,
+            statisticalParity: 0.09,
+            predictiveParity: 0.05,
+          },
+        },
+      },
+      {
+        label: "Validation 3",
+        performance: {
+          auc: 0.79,
+          accuracy: 0.73,
+          precision: 0.51,
+          recall: 0.49,
+          f1: 0.50,
+        },
+        fairness: {
+          base: {
+            equalizedOdds: 0.07,
+            statisticalParity: 0.10,
+            predictiveParity: 0.06,
+          },
+          postprocessed: {
+            equalizedOdds: 0.06,
+            statisticalParity: 0.09,
+            predictiveParity: 0.05,
+          },
+        },
+      },
+    ],
     metrics: [
-      { label: "AUC (validation)", value: "0.78" },
       { label: "AUC (out‑of‑time)", value: "0.76" },
       { label: "KS statistic", value: "30" },
     ],
     technical: {
-      framework: "PyTorch 2.x",
-      loss: "Brier score (squared error on PD)",
-      optimizer: "AdamW",
-      learningRate: "5e‑4 with step decay",
-      batchSize: "2048",
-      epochs: "20 (no early stopping, fixed schedule)",
+      framework: "TensorFlow (Keras)",
+      loss: "binary_crossentropy",
+      optimizer: "adam",
+      learningRate: "1e‑3",
+      batchSize: "512",
+      epochs: "10",
+      finalModelParams: `{
+  "epochs": 10,
+  "batch_size": 512,
+  "layer_units": (32, 32),
+  "optimizer": "adam",
+  "learning_rate": 1e-3,
+  "loss": "binary_crossentropy"
+}`,
       preprocessing:
         "Takes upstream scores and coarse segments as input; minimal additional preprocessing beyond standard scaling.",
       postprocessing:
-        "Outputs directly used as calibrated PDs; PD bands aligned with policy‑driven cut‑offs.",
-      regularisation: "Weight decay 1e‑4; small network kept intentionally simple.",
+        "Optional fairness postprocessing (threshold adjustment) can be enabled for evaluation; outputs used as calibrated PDs downstream.",
+      regularisation: "Standard regularisation as needed (e.g., early stopping / weight decay).",
     },
     fairness:
       "Segments and splits chosen to align with policy‑relevant groups; easier to show how decisions differ by segment.",
@@ -240,184 +466,7 @@ export default function ModelCardsPage() {
 
         <div className="grid gap-5 md:grid-cols-2">
           {models.map((model) => (
-            <article
-              key={model.name}
-              className="flex flex-col gap-4 rounded-2xl border border-zinc-200/80 bg-white p-5 text-xs shadow-sm dark:border-zinc-800/80 dark:bg-zinc-950/40"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="space-y-1">
-                  <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                    {model.name}
-                  </h3>
-                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    {model.owner} · {model.type}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-[11px]">
-                  <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-100">
-                    {model.status}
-                  </span>
-                  <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                    {model.stage}
-                  </span>
-                  <span className="rounded-full bg-sky-500/10 px-2 py-0.5 text-[11px] font-medium text-sky-700 dark:bg-sky-500/15 dark:text-sky-100">
-                    {model.variant}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                {model.description}
-              </p>
-
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="space-y-1 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900/70">
-                  <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                    Size &amp; complexity
-                  </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                    {model.size}
-                  </p>
-                </div>
-                <div className="space-y-1 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900/70">
-                  <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                    Training window
-                  </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                    {model.trainingWindow}
-                  </p>
-                </div>
-                <div className="space-y-1 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900/70">
-                  <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                    Last trained &amp; infra
-                  </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                    {model.lastTrained} · {model.infra}
-                  </p>
-                </div>
-                <div className="space-y-1 rounded-xl bg-zinc-50 p-3 text-[11px] dark:bg-zinc-900/70 sm:col-span-3">
-                  <div className="font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                    Architecture (simplified)
-                  </div>
-                  <ol className="mt-1 space-y-1 text-[11px] text-zinc-600 dark:text-zinc-300">
-                    {model.architecture?.map((layer, index) => (
-                      <li key={layer} className="flex items-start gap-2">
-                        <span className="mt-[1px] flex h-4 w-4 items-center justify-center rounded-full border border-zinc-300 text-[9px] font-medium text-zinc-500 dark:border-zinc-600 dark:text-zinc-300">
-                          {index + 1}
-                        </span>
-                        <span>{layer}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-3">
-                {model.metrics.map((metric) => (
-                  <div
-                    key={metric.label}
-                    className="space-y-1 rounded-xl border border-zinc-200/80 bg-white p-3 dark:border-zinc-800/80 dark:bg-zinc-950/60"
-                  >
-                    <div className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
-                      {metric.label}
-                    </div>
-                    <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                      {metric.value}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="space-y-1 rounded-xl bg-amber-50 p-3 text-[11px] text-amber-900 dark:bg-amber-950/40 dark:text-amber-100">
-                  <div className="font-medium uppercase tracking-[0.18em]">
-                    Fairness &amp; segments
-                  </div>
-                  <p className="text-[11px] leading-relaxed">{model.fairness}</p>
-                </div>
-                <div className="space-y-1 rounded-xl bg-zinc-50 p-3 text-[11px] text-zinc-700 dark:bg-zinc-900/70 dark:text-zinc-200">
-                  <div className="font-medium uppercase tracking-[0.18em]">
-                    Risk &amp; monitoring notes
-                  </div>
-                  <p className="text-[11px] leading-relaxed">
-                    {model.riskNotes}
-                  </p>
-                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                    {model.monitoring}
-                  </p>
-                </div>
-              </div>
-
-              <details className="group rounded-xl border border-zinc-200/80 bg-zinc-50 p-3 text-[11px] text-zinc-700 marker:text-zinc-400 dark:border-zinc-800/80 dark:bg-zinc-900/70 dark:text-zinc-200">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
-                  <span className="font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
-                    Technical details
-                  </span>
-                  <span className="text-xs text-zinc-400 transition-transform group-open:rotate-90 dark:text-zinc-500">
-                    ▶
-                  </span>
-                </summary>
-                <div className="mt-3 grid gap-1.5 text-[11px] text-zinc-700 dark:text-zinc-200">
-                  <div className="flex justify-between gap-4">
-                    <span className="text-zinc-500 dark:text-zinc-400">
-                      Framework
-                    </span>
-                    <span className="text-right">
-                      {model.technical?.framework}
-                    </span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-zinc-500 dark:text-zinc-400">
-                      Loss
-                    </span>
-                    <span className="text-right">
-                      {model.technical?.loss}
-                    </span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-zinc-500 dark:text-zinc-400">
-                      Optimiser / LR
-                    </span>
-                    <span className="text-right">
-                      {model.technical?.optimizer} ·{" "}
-                      {model.technical?.learningRate}
-                    </span>
-                  </div>
-                  <div className="flex justify-between gap-4">
-                    <span className="text-zinc-500 dark:text-zinc-400">
-                      Batch / epochs
-                    </span>
-                    <span className="text-right">
-                      {model.technical?.batchSize} · {model.technical?.epochs}
-                    </span>
-                  </div>
-                  <div className="mt-1">
-                    <div className="text-zinc-500 dark:text-zinc-400">
-                      Preprocessing
-                    </div>
-                    <p className="mt-0.5 leading-relaxed">
-                      {model.technical?.preprocessing}
-                    </p>
-                  </div>
-                  <div className="mt-1">
-                    <div className="text-zinc-500 dark:text-zinc-400">
-                      Postprocessing
-                    </div>
-                    <p className="mt-0.5 leading-relaxed">
-                      {model.technical?.postprocessing}
-                    </p>
-                  </div>
-                  <div className="mt-1">
-                    <div className="text-zinc-500 dark:text-zinc-400">
-                      Regularisation
-                    </div>
-                    <p className="mt-0.5 leading-relaxed">
-                      {model.technical?.regularisation}
-                    </p>
-                  </div>
-                </div>
-              </details>
-            </article>
+            <ModelCard key={model.name} model={model} />
           ))}
         </div>
       </section>
