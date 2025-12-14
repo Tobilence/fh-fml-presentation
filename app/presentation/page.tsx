@@ -3,11 +3,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/utils/supabase/client";
-import { DataExplorationSlide } from "./DataExplorationSlide";
-import { BusinessCase } from "./BusinessCase";
-import { ModelDevelopment } from "./ModelDevelopment";
-import { ModelFinetuning } from "./ModelFinetuning";
-import { ModelCardSlide } from "./ModelCardSlide";
+import { PRESENTATION_SLIDES } from "./slides";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
 const PRESENTATION_LIVE_TYPE = "presentation-live";
@@ -20,20 +16,8 @@ export default function PresentationPage() {
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null);
 
   const slideNode = React.useMemo(() => {
-    const statusComponentMap: Record<number, React.ReactNode> = {
-      0: <BusinessCase />,
-      1: <DataExplorationSlide />,
-      2: <ModelDevelopment />,
-      3: <ModelFinetuning />,
-      4: <ModelCardSlide />,
-    };
-
-    if (
-      status !== null &&
-      Object.prototype.hasOwnProperty.call(statusComponentMap, status)
-    ) {
-      return statusComponentMap[status];
-    }
+    const slide = PRESENTATION_SLIDES.find((entry) => entry.status === status);
+    if (slide) return <slide.Component />;
 
     return <div>No slide to show for status {String(status)}.</div>;
   }, [status]);
