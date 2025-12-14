@@ -17,7 +17,7 @@ const models: ModelCardData[] = [
       "Main production network used to predict 12‑month probability of default for new‑to‑bank retail customers.",
     architecture: [
       "Input: ~180 engineered features (behavioural, bureau, application)",
-      "Dense(32) · ReLU",
+      "Dense(32) · ReLU ",
       "Dense(32) · ReLU",
       "Output: 1 · sigmoid (12‑month PD 0–1)",
     ],
@@ -135,7 +135,7 @@ const models: ModelCardData[] = [
       "Smaller benchmark network used for back‑testing and to provide more interpretable odds and feature effects.",
     architecture: [
       "Input: ~80 hand‑picked features (no complex interactions)",
-      "Dense(32) · ReLU",
+      "Dense(32) · ReLU ",
       "Dense(32) · ReLU",
       "Output: 1 · sigmoid (PD 0–1)",
     ],
@@ -253,7 +253,7 @@ const models: ModelCardData[] = [
       "Deliberately constrained network used in workshops with business and risk to discuss cut‑offs, calibration, and treatment strategies.",
     architecture: [
       "Input: ~40 aggregated features (score bands, utilisation, income)",
-      "Dense(32) · ReLU",
+      "Dense(32) · ReLU ",
       "Dense(32) · ReLU",
       "Output: 1 · sigmoid (calibrated PD)",
     ],

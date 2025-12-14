@@ -4,6 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@/utils/supabase/client";
 import { DataExplorationSlide } from "./DataExplorationSlide";
+import { BusinessCase } from "./BusinessCase";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
 const PRESENTATION_LIVE_TYPE = "presentation-live";
@@ -17,8 +18,8 @@ export default function PresentationPage() {
 
   const slideNode = React.useMemo(() => {
     const statusComponentMap: Record<number, React.ReactNode> = {
-      0: <DataExplorationSlide />,
-      // add more statuses here as needed, e.g. 1: <OtherComponent />
+      0: <BusinessCase />,
+      1: <DataExplorationSlide />,
     };
 
     if (

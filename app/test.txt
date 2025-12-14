@@ -1,0 +1,133 @@
+[
+  {
+    name: "NN · Retail PD v2.0",
+    variant: "Champion",
+    status: "Approved",
+    stage: "In production",
+    owner: "Credit Risk Analytics",
+    type: "Feed-forward neural network",
+    size: "~180 features · 4 hidden layers",
+    trainingWindow: "Applications 2021–2023",
+    lastTrained: "2024‑03‑15",
+    infra: "PyTorch on‑prem · nightly batch scoring",
+    description:
+      "Main production network used to predict 12‑month probability of default for new‑to‑bank retail customers.",
+    architecture: [
+      "Input: ~180 engineered features (behavioural, bureau, application)",
+      "Dense(256) · ReLU · BatchNorm",
+      "Dense(128) · ReLU · Dropout(0.3)",
+      "Dense(64) · ReLU",
+      "Output: 1 · sigmoid (12‑month PD 0–1)",
+    ],
+    metrics: [
+      { label: "AUC (validation)", value: "0.87" },
+      { label: "AUC (out‑of‑time)", value: "0.84" },
+      { label: "KS statistic", value: "42" },
+    ],
+    technical: {
+      framework: "PyTorch 2.x",
+      loss: "Binary cross‑entropy with logits",
+      optimizer: "Adam",
+      learningRate: "1e‑3 with cosine decay",
+      batchSize: "1024",
+      epochs: "30 (early stopping patience 5)",
+      preprocessing:
+        "Impute missing values, cap outliers at P99, standardise numeric features, target‑encode high‑cardinality categoricals.",
+      postprocessing:
+        "Isotonic calibration on validation set; map PD into 10 internal risk bands for decision rules.",
+      regularisation: "Dropout 0.3 on hidden layers, L2 weight decay 1e‑4, early stopping on validation AUC.",
+    },
+    fairness:
+      "Fairness review completed on key protected segments; no critical issues identified, but higher rejection rates in young renters segment.",
+    riskNotes:
+      "Classified as material model (MRL 2). Complex interactions make local explanations harder to communicate to front‑line staff.",
+    monitoring: "Monthly drift & stability reports via MRM dashboard; alerts if PSI > 0.2 or approval rate moves > 3 p.p.",
+  },
+  {
+    name: "NN · Retail PD v1.5 (compact)",
+    variant: "Baseline",
+    status: "Approved",
+    stage: "Shadow",
+    owner: "Credit Risk Analytics",
+    type: "Compact neural network",
+    size: "~80 features · 3 hidden layers",
+    trainingWindow: "Applications 2020–2022",
+    lastTrained: "2023‑11‑02",
+    infra: "ONNX export · scored in SQL engine",
+    description:
+      "Smaller benchmark network used for back‑testing and to provide more interpretable odds and feature effects.",
+    architecture: [
+      "Input: ~80 hand‑picked features (no complex interactions)",
+      "Dense(64) · ReLU",
+      "Dense(32) · ReLU · Dropout(0.2)",
+      "Output: 1 · sigmoid (PD 0–1)",
+    ],
+    metrics: [
+      { label: "AUC (validation)", value: "0.81" },
+      { label: "AUC (out‑of‑time)", value: "0.79" },
+      { label: "KS statistic", value: "34" },
+    ],
+    technical: {
+      framework: "Keras / TensorFlow 2.x",
+      loss: "Binary cross‑entropy",
+      optimizer: "Adam",
+      learningRate: "3e‑4 fixed",
+      batchSize: "512",
+      epochs: "40 (early stopping patience 8)",
+      preprocessing:
+        "Simple scaling of numeric features, one‑hot encoding for low‑cardinality categoricals, no target encoding.",
+      postprocessing:
+        "Platt scaling; PDs rounded to basis points and fed into legacy decision engine.",
+      regularisation: "Dropout 0.2, L2 weight decay 5e‑5.",
+    },
+    fairness:
+      "More stable approval rates across age and tenure segments; used as reference when explaining uplift from non‑linear models.",
+    riskNotes:
+      "Lower model risk rating (MRL 3) due to simpler structure; remains fallback option if champion model is turned off.",
+    monitoring: "Tracked alongside champion to check that uplift remains stable and that gap in performance justifies complexity.",
+  },
+  {
+    name: "NN · Retail PD v2.0‑X (calibrated)",
+    variant: "Interpretable challenger",
+    status: "Experimental",
+    stage: "UAT only",
+    owner: "Credit Risk Analytics",
+    type: "Shallow neural network for calibration",
+    size: "~40 features · 3 hidden layers",
+    trainingWindow: "Applications 2021–2023",
+    lastTrained: "2024‑05‑28",
+    infra: "Python API · real‑time scoring sandbox",
+    description:
+      "Deliberately constrained network used in workshops with business and risk to discuss cut‑offs, calibration, and treatment strategies.",
+    architecture: [
+      "Input: ~40 aggregated features (score bands, utilisation, income)",
+      "Dense(64) · ReLU",
+      "Dense(32) · ReLU",
+      "Output: 1 · sigmoid (calibrated PD)",
+    ],
+    metrics: [
+      { label: "AUC (validation)", value: "0.78" },
+      { label: "AUC (out‑of‑time)", value: "0.76" },
+      { label: "KS statistic", value: "30" },
+    ],
+    technical: {
+      framework: "PyTorch 2.x",
+      loss: "Brier score (squared error on PD)",
+      optimizer: "AdamW",
+      learningRate: "5e‑4 with step decay",
+      batchSize: "2048",
+      epochs: "20 (no early stopping, fixed schedule)",
+      preprocessing:
+        "Takes upstream scores and coarse segments as input; minimal additional preprocessing beyond standard scaling.",
+      postprocessing:
+        "Outputs directly used as calibrated PDs; PD bands aligned with policy‑driven cut‑offs.",
+      regularisation: "Weight decay 1e‑4; small network kept intentionally simple.",
+    },
+    fairness:
+      "Segments and splits chosen to align with policy‑relevant groups; easier to show how decisions differ by segment.",
+    riskNotes:
+      "Not intended for production; used as a communication artefact in model committee and policy design sessions.",
+    monitoring:
+      "No automated monitoring – used for finite set of scenario analyses to complement main monitoring view.",
+  },
+]
