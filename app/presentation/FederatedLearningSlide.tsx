@@ -11,7 +11,7 @@ export function FederatedLearningSlide() {
                 Federated Machine Learning · Pros &amp; cons
               </div>
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-                Federated learning (group-wide)
+                Federated Learning: What would it look like?
               </h2>
             </header>
 
@@ -22,10 +22,18 @@ export function FederatedLearningSlide() {
                     Upsides
                   </div>
                   <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-emerald-950/90 dark:text-emerald-100/90">
-                    <li>Raw data stays local → easier residency &amp; compliance.</li>
-                    <li>Cross-entity learning → better generalization &amp; robustness.</li>
-                    <li>Faster propagation of new patterns across subsidiaries.</li>
-                    <li>More standardized governance/monitoring vs N separate models.</li>
+                    <li>
+                      <span className="font-medium">Raw data stays local</span> → easier residency &amp; compliance.
+                    </li>
+                    <li>
+                      <span className="font-medium">Cross-entity learning</span> → better generalization &amp; robustness.
+                    </li>
+                    <li>
+                      <span className="font-medium">Faster propagation</span> of new patterns across subsidiaries.
+                    </li>
+                    <li>
+                      <span className="font-medium">Standardized governance/monitoring</span> vs N separate models.
+                    </li>
                   </ul>
                 </div>
 
@@ -34,24 +42,44 @@ export function FederatedLearningSlide() {
                     Downsides / risks
                   </div>
                   <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-rose-950/90 dark:text-rose-100/90">
-                    <li>Update leakage (membership inference / gradient inversion).</li>
-                    <li>Poisoning / backdoors via malicious participants.</li>
-                    <li>Sybil/impersonation &amp; control-plane attack surface.</li>
-                    <li>Hub is a high-value target + higher infra/ops overhead.</li>
+                    <li>
+                      <span className="font-medium">Update leakage</span> (membership inference / gradient inversion).
+                    </li>
+                    <li>
+                      <span className="font-medium">Poisoning / backdoors</span> via malicious participants.
+                    </li>
+                    <li>
+                      <span className="font-medium">Sybil/impersonation</span> &amp; control-plane attack surface.
+                    </li>
+                    <li>
+                      <span className="font-medium">Hub is a high-value target</span> + higher infra/ops overhead.
+                    </li>
                   </ul>
                 </div>
 
                 <div className="md:col-span-2 rounded-xl border border-zinc-200/80 bg-white p-4 text-zinc-700 shadow-sm dark:border-zinc-800/80 dark:bg-zinc-950/40 dark:text-zinc-200">
                   <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    What the bank needs to implement
+                    Implementation Requirements
                   </div>
                   <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
-                    <li>Compute: local training per subsidiary + central orchestrator/log storage.</li>
-                    <li>Secure connectivity: hub↔node mTLS/VPN; bandwidth for model updates.</li>
-                    <li>Identity &amp; key mgmt: node certificates, rotation/revocation; IAM/SSO; secrets/KMS.</li>
-                    <li>Logging/audit/monitoring: round logs, lineage, drift &amp; performance monitoring.</li>
-                    <li>MLOps: registry, CI/CD, approvals; versioned configs &amp; rollout process.</li>
-                    <li>Data/feature readiness: consistent features + local data quality checks.</li>
+                    <li>
+                      <span className="font-medium">FL platform</span>: hub/orchestrator + local FL nodes/agents per subsidiary.
+                    </li>
+                    <li>
+                      <span className="font-medium">Node onboarding</span>: allow-listing, identity, signed artifacts, key rotation/revocation.
+                    </li>
+                    <li>
+                      <span className="font-medium">Secure connectivity</span>: hub↔node mTLS/VPN + network segmentation.
+                    </li>
+                    <li>
+                      <span className="font-medium">Privacy/security controls</span>: secure aggregation, DP/clipping (as needed), update validation.
+                    </li>
+                    <li>
+                      <span className="font-medium">Round ops &amp; observability</span>: per-round audit logs, model lineage, client-level monitoring.
+                    </li>
+                    <li>
+                      <span className="font-medium">Cross-site readiness</span>: aligned feature definitions + local data quality gates.
+                    </li>
                   </ul>
                 </div>
               </div>
