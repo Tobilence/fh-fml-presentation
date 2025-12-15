@@ -14,8 +14,8 @@ export function ShapSlide() {
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
                 SHAP summary plot
               </h2>
-              <p className="max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-base">
-                This pattern was <span className="font-medium">similar for all models</span>.
+              <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-base">
+              Accross all models, education, age and relationship status showed the most significant impact on model output.
               </p>
             </header>
 
@@ -32,7 +32,7 @@ export function ShapSlide() {
                 </div>
               </div>
               <div className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-                SHAP values across combined banks (summary).
+                SHAP summary plot for the combined-banks model.
               </div>
             </div>
           </div>

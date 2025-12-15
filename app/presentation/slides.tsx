@@ -2,6 +2,7 @@ import type React from "react";
 
 import { BusinessCase } from "./BusinessCase";
 import { DataExplorationSlide } from "./DataExplorationSlide";
+import { FederatedLearningSlide } from "./FederatedLearningSlide";
 import { ModelDevelopment } from "./ModelDevelopment";
 import { ModelFinetuning } from "./ModelFinetuning";
 import { ModelCardSlide, ModelCardSlideBankA, ModelCardSlideBankB } from "./ModelCardSlide";
@@ -22,4 +23,5 @@ export const PRESENTATION_SLIDES: ReadonlyArray<PresentationSlideDefinition> = [
   { status: 5, title: "Model card (Bank A)", Component: ModelCardSlideBankA },
   { status: 6, title: "Model card (Bank B)", Component: ModelCardSlideBankB },
   { status: 7, title: "SHAP (explainability)", Component: ShapSlide },
+  { status: 8, title: "Federated learning (pros/cons)", Component: FederatedLearningSlide },
 ];

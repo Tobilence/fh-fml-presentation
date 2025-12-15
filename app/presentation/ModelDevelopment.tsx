@@ -65,30 +65,14 @@ export function ModelDevelopment() {
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-white p-4 ring-1 ring-zinc-200 dark:bg-zinc-950 dark:ring-zinc-800 md:col-span-2">
-                  <div className="grid gap-4 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] md:items-start">
-                    <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        Key observation
-                      </div>
-                      <p className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-                        <span className="font-semibold">Neural networks stood out:</span> the federated model outperformed the per-bank centralized models in <span className="font-medium">recall</span>.
-                      </p>
-                      <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-                        This suggests federation can be more than a privacy workaround—it may also improve performance by learning from broader, more diverse patterns across banks.
-                      </p>
+                  <div className="md:col-span-2 rounded-xl border border-emerald-200/80 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-100">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-200">
+                      Key insight
                     </div>
-
-                    <div className="rounded-xl border border-emerald-200/80 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-100">
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-200">
-                        Takeaway
-                      </div>
-                      <div className="mt-2 leading-relaxed">
-                        Federation can <span className="font-semibold">improve model performance</span> (higher recall) given the task at hand.
-                      </div>
-                    </div>
+                    <p className="mt-2 leading-relaxed">
+                      <span className="font-semibold">Federated neural networks achieved higher recall</span> than per-bank centralized models. This is why neural networks were chosen for further investigation.
+                    </p>
                   </div>
-                </div>
               </div>
             </div>
           </div>

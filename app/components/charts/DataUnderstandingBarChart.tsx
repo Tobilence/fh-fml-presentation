@@ -120,20 +120,30 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
   showHeader = true,
 }) => {
   const [data, setData] = React.useState<Row[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     let active = true;
-
-    (async () => {
-      const rows = await getData(dataset, split);
-      if (active) setData(rows);
-    })().catch((e) => {
-      console.error("Failed to load chart data:", e);
-      if (active) setData([]);
-    });
+    const timeoutId = window.setTimeout(() => {
+      (async () => {
+        if (active) setLoading(true);
+        const rows = await getData(dataset, split);
+        if (active) {
+          setData(rows);
+          setLoading(false);
+        }
+      })().catch((e) => {
+        console.error("Failed to load chart data:", e);
+        if (active) {
+          setData([]);
+          setLoading(false);
+        }
+      });
+    }, 500);
 
     return () => {
       active = false;
+      window.clearTimeout(timeoutId);
     };
   }, [dataset, split]);
 
@@ -145,6 +155,23 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
         </div>
       ) : null}
 
+      {loading ? (
+        <div
+          aria-live="polite"
+          style={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 13,
+            opacity: 0.75,
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 8,
+          }}
+        >
+          Loading chart…
+        </div>
+      ) : (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
           <CartesianGrid strokeDasharray="3 3" opacity={0.35} />
@@ -157,6 +184,7 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
           <Bar dataKey="no" name="Low Income" fill="#fca5a5" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
+      )}
     </div>
   );
 };
