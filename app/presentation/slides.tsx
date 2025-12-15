@@ -7,6 +7,8 @@ import { ModelDevelopment } from "./ModelDevelopment";
 import { ModelFinetuning } from "./ModelFinetuning";
 import { ModelCardSlide, ModelCardSlideBankA, ModelCardSlideBankB } from "./ModelCardSlide";
 import { ShapSlide } from "./ShapSlide";
+import { TakeawaysRecommendationSlide } from "./TakeawaysRecommendationSlide";
+import { NextStepsSlide } from "./NextStepsSlide";
 
 export type PresentationSlideDefinition = Readonly<{
   status: number;
@@ -24,4 +26,6 @@ export const PRESENTATION_SLIDES: ReadonlyArray<PresentationSlideDefinition> = [
   { status: 6, title: "Model card (Bank B)", Component: ModelCardSlideBankB },
   { status: 7, title: "SHAP (explainability)", Component: ShapSlide },
   { status: 8, title: "Federated learning (pros/cons)", Component: FederatedLearningSlide },
+  { status: 9, title: "Takeaways / recommendation", Component: TakeawaysRecommendationSlide },
+  { status: 10, title: "Next steps", Component: NextStepsSlide },
 ];
