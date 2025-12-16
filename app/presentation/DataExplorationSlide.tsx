@@ -108,7 +108,7 @@ export function DataExplorationSlide() {
 
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                Fairness presets
+              Categories
               </div>
               <div className="mt-3 grid gap-3">
                 <Button
