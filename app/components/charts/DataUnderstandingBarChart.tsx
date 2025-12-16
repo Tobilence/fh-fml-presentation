@@ -148,9 +148,18 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
   }, [dataset, split]);
 
   return (
-    <div style={{ width: "100%", height, paddingBottom: 25 }}>
+    <div
+      className="rounded-xl border border-zinc-200 bg-white/70 p-3 shadow-sm dark:border-white/10 dark:bg-zinc-950/40"
+      style={{ width: "100%", height, paddingBottom: 12 }}
+    >
       {showHeader ? (
-        <div style={{ fontSize: 14, marginBottom: 8, opacity: 0.85 }}>
+        <div
+          style={{
+            fontSize: 14,
+            marginBottom: 8,
+            color: "var(--muted-foreground)",
+          }}
+        >
           Title: {dataset} — {split}
         </div>
       ) : null}
@@ -164,8 +173,9 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
             alignItems: "center",
             justifyContent: "center",
             fontSize: 13,
-            opacity: 0.75,
-            border: "1px solid rgba(255,255,255,0.08)",
+            color: "var(--muted-foreground)",
+            background: "var(--panel)",
+            border: "1px solid var(--border)",
             borderRadius: 8,
           }}
         >
@@ -174,11 +184,39 @@ export const DataUnderstandingBarChart: React.FC<DataUnderstandingBarChartProps>
       ) : (
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-          <CartesianGrid strokeDasharray="3 3" opacity={0.35} />
-          <XAxis dataKey="group" tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} label={{ value: "Count", angle: -90, position: "insideLeft" }} />
-          <Tooltip />
-          <Legend align="right" verticalAlign="top" />
+          <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" />
+          <XAxis
+            dataKey="group"
+            tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+            axisLine={{ stroke: "var(--chart-axis)" }}
+            tickLine={{ stroke: "var(--chart-axis)" }}
+          />
+          <YAxis
+            tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+            axisLine={{ stroke: "var(--chart-axis)" }}
+            tickLine={{ stroke: "var(--chart-axis)" }}
+            label={{
+              value: "Count",
+              angle: -90,
+              position: "insideLeft",
+              fill: "var(--muted-foreground)",
+            }}
+          />
+          <Tooltip
+            contentStyle={{
+              background: "var(--chart-tooltip-bg)",
+              border: "1px solid var(--chart-tooltip-border)",
+              borderRadius: 10,
+              color: "var(--foreground)",
+            }}
+            labelStyle={{ color: "var(--muted-foreground)" }}
+            itemStyle={{ color: "var(--foreground)" }}
+          />
+          <Legend
+            align="right"
+            verticalAlign="top"
+            wrapperStyle={{ color: "var(--muted-foreground)" }}
+          />
           {/* Grouped bars: two series side-by-side for each category */}
           <Bar dataKey="yes" name="High Income" fill="#22c55e" radius={[4, 4, 0, 0]} />
           <Bar dataKey="no" name="Low Income" fill="#fca5a5" radius={[4, 4, 0, 0]} />

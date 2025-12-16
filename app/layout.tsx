@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Theme } from "@radix-ui/themes";
+import RadixThemeProvider from "./components/RadixThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen`}
       >
-        <Theme accentColor="gray" radius="small" className="flex min-h-screen flex-col">
+        <RadixThemeProvider>
           <Header />
           <main className="flex-1 min-h-0 bg-gradient-to-b from-zinc-50 via-white to-zinc-100/80 px-4 py-10 dark:from-black dark:via-zinc-950 dark:to-zinc-900/80 sm:px-6">
             {children}
           </main>
           <Footer />
-        </Theme>
+        </RadixThemeProvider>
       </body>
     </html>
   );

@@ -37,7 +37,7 @@ export function ExploratoryDataAnalysisSection() {
 
     return (
         <section className="flex flex-col gap-8">
-            <div className="space-y-4 text-xs sm:text-sm">
+            <div className="space-y-4 text-xs text-zinc-700 sm:text-sm dark:text-zinc-200">
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
                     2 · Exploratory Data Analysis
                 </h2>
@@ -241,8 +241,8 @@ export function ExploratoryDataAnalysisSection() {
                                         aria-pressed={isActive}
                                         className={
                                             isActive
-                                                ? "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                                                : "text-zinc-800 dark:text-zinc-200"
+                                                ? "!bg-zinc-900 !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200"
+                                                : "!text-zinc-800 dark:!text-zinc-200 !border-zinc-300 dark:!border-white/20 dark:!bg-transparent"
                                         }
                                     >
                                         {option.label}
@@ -265,7 +265,7 @@ export function ExploratoryDataAnalysisSection() {
                                         variant="outline"
                                         radius="small"
                                         size="2"
-                                        className="text-zinc-800 dark:text-zinc-200"
+                                        className="!text-zinc-800 dark:!text-zinc-200 !border-zinc-300 dark:!border-white/20 dark:!bg-transparent"
                                     >
                                         {split}
                                     </Button>

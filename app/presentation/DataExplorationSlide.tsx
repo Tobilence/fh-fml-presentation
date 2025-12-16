@@ -94,8 +94,8 @@ export function DataExplorationSlide() {
                         aria-pressed={isActive}
                         className={
                           isActive
-                            ? "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                            : "text-zinc-800 dark:text-zinc-200"
+                            ? "!bg-zinc-900 !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200"
+                            : "!text-zinc-800 dark:!text-zinc-200 !border-zinc-300 dark:!border-white/20 dark:!bg-transparent"
                         }
                       >
                         {option.label}
@@ -120,8 +120,8 @@ export function DataExplorationSlide() {
                   aria-pressed={split === "Gender"}
                   className={
                     split === "Gender"
-                      ? "h-12 justify-between bg-zinc-900 px-4 text-left text-base font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                      : "h-12 justify-between bg-zinc-100 px-4 text-left text-base font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                      ? "h-12 justify-between !bg-zinc-900 px-4 text-left text-base font-semibold !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200 !border !border-zinc-200 dark:!border-white/10"
+                      : "h-12 justify-between !bg-zinc-100 px-4 text-left text-base font-semibold !text-zinc-900 hover:!bg-zinc-200 dark:!bg-zinc-900/60 dark:!text-zinc-50 dark:hover:!bg-zinc-900 !border !border-zinc-200 dark:!border-white/10"
                   }
                 >
                   <span>Gender</span>
@@ -136,8 +136,8 @@ export function DataExplorationSlide() {
                   aria-pressed={split === "Race"}
                   className={
                     split === "Race"
-                      ? "h-12 justify-between bg-zinc-900 px-4 text-left text-base font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                      : "h-12 justify-between bg-zinc-100 px-4 text-left text-base font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                      ? "h-12 justify-between !bg-zinc-900 px-4 text-left text-base font-semibold !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200 !border !border-zinc-200 dark:!border-white/10"
+                      : "h-12 justify-between !bg-zinc-100 px-4 text-left text-base font-semibold !text-zinc-900 hover:!bg-zinc-200 dark:!bg-zinc-900/60 dark:!text-zinc-50 dark:hover:!bg-zinc-900 !border !border-zinc-200 dark:!border-white/10"
                   }
                 >
                   <span>Race</span>
@@ -152,8 +152,8 @@ export function DataExplorationSlide() {
                   aria-pressed={split === "Age"}
                   className={
                     split === "Age"
-                      ? "h-12 justify-between bg-zinc-900 px-4 text-left text-base font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                      : "h-12 justify-between bg-zinc-100 px-4 text-left text-base font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                      ? "h-12 justify-between !bg-zinc-900 px-4 text-left text-base font-semibold !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200 !border !border-zinc-200 dark:!border-white/10"
+                      : "h-12 justify-between !bg-zinc-100 px-4 text-left text-base font-semibold !text-zinc-900 hover:!bg-zinc-200 dark:!bg-zinc-900/60 dark:!text-zinc-50 dark:hover:!bg-zinc-900 !border !border-zinc-200 dark:!border-white/10"
                   }
                 >
                   <span>Age</span>
@@ -168,8 +168,8 @@ export function DataExplorationSlide() {
                   aria-pressed={split === "Marital Status"}
                   className={
                     split === "Marital Status"
-                      ? "h-12 justify-between bg-zinc-900 px-4 text-left text-base font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                      : "h-12 justify-between bg-zinc-100 px-4 text-left text-base font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                      ? "h-12 justify-between !bg-zinc-900 px-4 text-left text-base font-semibold !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200 !border !border-zinc-200 dark:!border-white/10"
+                      : "h-12 justify-between !bg-zinc-100 px-4 text-left text-base font-semibold !text-zinc-900 hover:!bg-zinc-200 dark:!bg-zinc-900/60 dark:!text-zinc-50 dark:hover:!bg-zinc-900 !border !border-zinc-200 dark:!border-white/10"
                   }
                 >
                   <span>Marital Status</span>
@@ -184,8 +184,8 @@ export function DataExplorationSlide() {
                   aria-pressed={split === "Education"}
                   className={
                     split === "Education"
-                      ? "h-12 justify-between bg-zinc-900 px-4 text-left text-base font-semibold text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                      : "h-12 justify-between bg-zinc-100 px-4 text-left text-base font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-900"
+                      ? "h-12 justify-between !bg-zinc-900 px-4 text-left text-base font-semibold !text-white hover:!bg-zinc-800 dark:!bg-zinc-50 dark:!text-zinc-900 dark:hover:!bg-zinc-200 !border !border-zinc-200 dark:!border-white/10"
+                      : "h-12 justify-between !bg-zinc-100 px-4 text-left text-base font-semibold !text-zinc-900 hover:!bg-zinc-200 dark:!bg-zinc-900/60 dark:!text-zinc-50 dark:hover:!bg-zinc-900 !border !border-zinc-200 dark:!border-white/10"
                   }
                 >
                   <span>Education</span>
