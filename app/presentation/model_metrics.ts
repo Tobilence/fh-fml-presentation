@@ -29,26 +29,26 @@ const modelMetrics = [
         "label": "Local Model (combined)",
         "description": "A local model trained on all banks' data combined.",
         "beforePreprocessing": {
-            "accuracy": 0.76,
-            "precision": 0.60,
-            "recall": 0.05,
-            "f1": 0.09,
-            "auc": 0.75,
+            "accuracy": 0.84,
+            "precision": 0.72,
+            "recall": 0.52,
+            "f1": 0.60,
+            "auc": 0.86,
             "target_shuffling_p": 0.001,
             "selection_rate_gap": 0.10,
             "TPR_gap": 0.05,
             "FPR_gap": 0.04
         },
         "afterPreprocessing": {
-            "accuracy": 0.74,
-            "precision": 0.48,
-            "recall": 0.50,
-            "f1": 0.49,
-            "auc": 0.75,
+            "accuracy": 0.82,
+            "precision": 0.71,
+            "recall": 0.60,
+            "f1": 0.62,
+            "auc": 0.84,
             "target_shuffling_p": 0.001,
-            "selection_rate_gap": 0.13,
-            "TPR_gap": 0.04,
-            "FPR_gap": 0.05
+            "selection_rate_gap": 0.06,
+            "TPR_gap": 0.01,
+            "FPR_gap": 0.03
         }
     },
     {
