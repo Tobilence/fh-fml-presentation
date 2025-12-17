@@ -37,14 +37,28 @@ export type ModelFairnessMetrics = {
   predictiveParity: number;
 };
 
+export type ModelFairnessGapMetrics = {
+  selection_rate_gap: number;
+  TPR_gap: number;
+  FPR_gap: number;
+};
+
 export type ModelValidationSnapshot = {
   /** Display label, e.g. "Validation 1" or "Fold 3" */
   label: string;
-  performance: ModelPerformanceMetrics;
-  fairness: {
+  /**
+   * Legacy (placeholder) validation metrics.
+   * Kept for backwards compatibility with the example `/model-cards` page.
+   */
+  performance?: ModelPerformanceMetrics;
+  fairness?: {
     base: ModelFairnessMetrics;
     postprocessed: ModelFairnessMetrics;
   };
+  /**
+   * Fairness gaps (e.g. Male vs Female) from the notebook output table.
+   */
+  fairnessGaps?: ModelFairnessGapMetrics;
 };
 
 export type ModelCardData = {
@@ -89,16 +103,33 @@ export function ModelCard({
   layout?: ModelCardLayout;
 }) {
   const [validationIndex, setValidationIndex] = React.useState(0);
+  const [beforeAfterEnabled, setBeforeAfterEnabled] = React.useState(false);
   const [fairnessPostprocessingEnabled, setFairnessPostprocessingEnabled] =
     React.useState(false);
+  const beforeAfterSwitchId = React.useId();
   const fairnessSwitchId = React.useId();
 
   const maxValidations = model.validations.length;
-  const safeValidationIndex = clampIndex(validationIndex, maxValidations);
+  const hasBeforeAfterSnapshots =
+    model.validations.length === 2 &&
+    /before/i.test(model.validations[0]?.label ?? "") &&
+    /after/i.test(model.validations[1]?.label ?? "");
+
+  const safeValidationIndex = hasBeforeAfterSnapshots
+    ? beforeAfterEnabled
+      ? 1
+      : 0
+    : clampIndex(validationIndex, maxValidations);
+
   const selectedValidation = model.validations[safeValidationIndex];
-  const selectedFairnessMetrics = fairnessPostprocessingEnabled
-    ? selectedValidation.fairness.postprocessed
-    : selectedValidation.fairness.base;
+  const hasPerformance = Boolean(selectedValidation.performance);
+  const hasFairness = Boolean(selectedValidation.fairness);
+
+  const selectedFairnessMetrics = selectedValidation.fairness
+    ? fairnessPostprocessingEnabled
+      ? selectedValidation.fairness.postprocessed
+      : selectedValidation.fairness.base
+    : null;
 
   const header = (
     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -178,71 +209,122 @@ export function ModelCard({
         <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Validation metrics
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <label
-            className="Label"
-            htmlFor={fairnessSwitchId}
-            style={{ paddingRight: 15 }}
-          >
-            Fairness postprocessing
-          </label>
-          <Switch.Root
-            className="SwitchRoot"
-            id={fairnessSwitchId}
-            checked={fairnessPostprocessingEnabled}
-            onCheckedChange={setFairnessPostprocessingEnabled}
-          >
-            <Switch.Thumb className="SwitchThumb" />
-          </Switch.Root>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          {hasBeforeAfterSnapshots ? (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label
+                className="Label"
+                htmlFor={beforeAfterSwitchId}
+                style={{ paddingRight: 15 }}
+              >
+                After postprocessing
+              </label>
+              <Switch.Root
+                className="SwitchRoot"
+                id={beforeAfterSwitchId}
+                checked={beforeAfterEnabled}
+                onCheckedChange={setBeforeAfterEnabled}
+              >
+                <Switch.Thumb className="SwitchThumb" />
+              </Switch.Root>
+            </div>
+          ) : null}
+
+          {hasFairness ? (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <label
+                className="Label"
+                htmlFor={fairnessSwitchId}
+                style={{ paddingRight: 15 }}
+              >
+                Fairness postprocessing
+              </label>
+              <Switch.Root
+                className="SwitchRoot"
+                id={fairnessSwitchId}
+                checked={fairnessPostprocessingEnabled}
+                onCheckedChange={setFairnessPostprocessingEnabled}
+              >
+                <Switch.Thumb className="SwitchThumb" />
+              </Switch.Root>
+            </div>
+          ) : null}
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
-        {[
-          {
-            label: "Accuracy (avg)",
-            value: formatMetric(selectedValidation.performance.accuracy),
-          },
-          {
-            label: "Precision (avg)",
-            value: formatMetric(selectedValidation.performance.precision),
-          },
-          {
-            label: "Recall (avg)",
-            value: formatMetric(selectedValidation.performance.recall),
-          },
-          {
-            label: "AUC Score (avg)",
-            value: formatMetric(selectedValidation.performance.auc),
-          },
-          { label: "F1 (avg)", value: formatMetric(selectedValidation.performance.f1) },
-          { label: "Target Shuffling", value: formatMetric(selectedValidation.performance.f1) },
-          {
-            label: "Equalized Odds",
-            value: formatMetric(selectedFairnessMetrics.equalizedOdds),
-          },
-          {
-            label: "Statistical Parity",
-            value: formatMetric(selectedFairnessMetrics.statisticalParity),
-          },
-          {
-            label: "Predictive Parity",
-            value: formatMetric(selectedFairnessMetrics.predictiveParity),
-          },
-        ].map((metric) => (
-          <div
-            key={metric.label}
-            className="space-y-1 rounded-xl border border-zinc-200/80 bg-white p-3 dark:border-zinc-800/80 dark:bg-zinc-950/60"
-          >
-            <div className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
-              {metric.label}
+      {hasPerformance && selectedValidation.performance ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          {[
+            {
+              label: "Accuracy (avg)",
+              value: formatMetric(selectedValidation.performance.accuracy),
+            },
+            {
+              label: "Precision (avg)",
+              value: formatMetric(selectedValidation.performance.precision),
+            },
+            {
+              label: "Recall (avg)",
+              value: formatMetric(selectedValidation.performance.recall),
+            },
+            {
+              label: "AUC Score (avg)",
+              value: formatMetric(selectedValidation.performance.auc),
+            },
+            { label: "F1 (avg)", value: formatMetric(selectedValidation.performance.f1) },
+            ...(selectedValidation.fairnessGaps
+              ? [
+                  {
+                    label: "Selection rate gap (M/F)",
+                    value: formatMetric(
+                      selectedValidation.fairnessGaps.selection_rate_gap,
+                    ),
+                  },
+                  {
+                    label: "TPR gap (M/F)",
+                    value: formatMetric(selectedValidation.fairnessGaps.TPR_gap),
+                  },
+                  {
+                    label: "FPR gap (M/F)",
+                    value: formatMetric(selectedValidation.fairnessGaps.FPR_gap),
+                  },
+                ]
+              : []),
+            ...(selectedFairnessMetrics
+              ? [
+                  {
+                    label: "Equalized Odds",
+                    value: formatMetric(selectedFairnessMetrics.equalizedOdds),
+                  },
+                  {
+                    label: "Statistical Parity",
+                    value: formatMetric(selectedFairnessMetrics.statisticalParity),
+                  },
+                  {
+                    label: "Predictive Parity",
+                    value: formatMetric(selectedFairnessMetrics.predictiveParity),
+                  },
+                ]
+              : []),
+          ].map((metric) => (
+            <div
+              key={metric.label}
+              className="space-y-1 rounded-xl border border-zinc-200/80 bg-white p-3 dark:border-zinc-800/80 dark:bg-zinc-950/60"
+            >
+              <div className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
+                {metric.label}
+              </div>
+              <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                {metric.value}
+              </div>
             </div>
-            <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-              {metric.value}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-xl border border-zinc-200/80 bg-white p-3 text-[11px] text-zinc-600 dark:border-zinc-800/80 dark:bg-zinc-950/60 dark:text-zinc-300">
+          No validation metrics available for this model.
+        </div>
+      )}
     </div>
   );
 

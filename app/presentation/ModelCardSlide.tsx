@@ -1,9 +1,9 @@
 import React from "react";
 import { ModelCard, type ModelCardData } from "../model-cards/ModelCard";
 
-const GLOBAL_MODEL: ModelCardData = {
+const FEDERATED_MODEL: ModelCardData = {
   name: "Federated Neural Network",
-  variant: "Global model",
+  variant: "Federated (FedAvg)",
   status: "Active",
   stage: "Production-like",
   owner: "FML Team",
@@ -31,87 +31,104 @@ const GLOBAL_MODEL: ModelCardData = {
     learningRate: "1e-3",
     batchSize: "512",
     epochs: "10",
+    finalModelParams: `{
+  "aggregation": "FedAvg",
+  "epochs": 10,
+  "batch_size": 512,
+  "layer_units": [32, 32],
+  "optimizer": "adam",
+  "learning_rate": 1e-3,
+  "loss": "binary_crossentropy"
+}`,
     preprocessing: "Standard scaling + consistent feature schema across clients.",
     postprocessing: "Optional fairness postprocessing (demo).",
     regularisation: "Dropout / weight decay (config dependent).",
   },
   validations: [
     {
-      label: "Validation",
+      label: "before",
       performance: {
-        accuracy: 0.81,
-        precision: 0.62,
-        recall: 0.72,
-        f1: 0.67,
-        auc: 0.86,
+        accuracy: 0.822851,
+        precision: 0.716653,
+        recall: 0.472918,
+        f1: 0.569815,
+        auc: 0.847183,
       },
-      fairness: {
-        base: {
-          equalizedOdds: 0.10,
-          statisticalParity: 0.14,
-          predictiveParity: 0.08,
-        },
-        postprocessed: {
-          equalizedOdds: 0.07,
-          statisticalParity: 0.10,
-          predictiveParity: 0.06,
-        },
+      fairnessGaps: {
+        selection_rate_gap: 0.122095,
+        TPR_gap: 0.041578,
+        FPR_gap: 0.043034,
+      },
+    },
+    {
+      label: "after",
+      performance: {
+        accuracy: 0.820914,
+        precision: 0.692563,
+        recall: 0.500151,
+        f1: 0.580837,
+        auc: 0.847183,
+      },
+      fairnessGaps: {
+        selection_rate_gap: 0.122095,
+        TPR_gap: 0.041578,
+        FPR_gap: 0.043034,
       },
     },
   ],
-  fairness: "Fairness evaluated across protected attributes with monitoring.",
+  fairness: "Fairness analysed separately (overall metrics shown here).",
   riskNotes: "Demo content — replace with real risks and mitigations.",
   monitoring: "Track drift + fairness metrics per bank and per subgroup.",
 };
 
-const BANK_A_MODEL: ModelCardData = {
-  ...GLOBAL_MODEL,
-  variant: "Local model (Bank A)",
-  stage: "Staging",
-  owner: "Bank A",
-  trainingWindow: "Historical dataset (bank A only)",
-  description:
-    "A locally trained neural network using only Bank A's dataset (baseline / comparison).",
+const FEDERATED_WEIGHTED_MODEL: ModelCardData = {
+  ...FEDERATED_MODEL,
+  variant: "Federated (weighted)",
+  technical: {
+    ...FEDERATED_MODEL.technical,
+    finalModelParams: `{
+  "aggregation": "Weighted FedAvg",
+  "aggregation_weights": "by client sample size",
+  "epochs": 10,
+  "batch_size": 512,
+  "layer_units": [32, 32],
+  "optimizer": "adam",
+  "learning_rate": 1e-3,
+  "loss": "binary_crossentropy"
+}`,
+  },
   validations: [
     {
-      ...GLOBAL_MODEL.validations[0],
+      label: "before",
       performance: {
-        accuracy: 0.80,
-        precision: 0.60,
-        recall: 0.69,
-        f1: 0.64,
-        auc: 0.84,
+        accuracy: 0.832307,
+        precision: 0.740026,
+        recall: 0.499547,
+        f1: 0.59646,
+        auc: 0.867154,
+      },
+      fairnessGaps: {
+        selection_rate_gap: 0.135351,
+        TPR_gap: 0.040622,
+        FPR_gap: 0.052252,
+      },
+    },
+    {
+      label: "after",
+      performance: {
+        accuracy: 0.831895,
+        precision: 0.737677,
+        recall: 0.500302,
+        f1: 0.596232,
+        auc: 0.867154,
+      },
+      fairnessGaps: {
+        selection_rate_gap: 0.135351,
+        TPR_gap: 0.040622,
+        FPR_gap: 0.052252,
       },
     },
   ],
-  riskNotes:
-    "Single-bank bias risk: may underperform on other banks due to distribution shift.",
-  monitoring: "Monitor drift + fairness; expect higher volatility with local data.",
-};
-
-const BANK_B_MODEL: ModelCardData = {
-  ...GLOBAL_MODEL,
-  variant: "Local model (Bank B)",
-  stage: "Staging",
-  owner: "Bank B",
-  trainingWindow: "Historical dataset (bank B only)",
-  description:
-    "A locally trained neural network using only Bank B's dataset (baseline / comparison).",
-  validations: [
-    {
-      ...GLOBAL_MODEL.validations[0],
-      performance: {
-        accuracy: 0.79,
-        precision: 0.59,
-        recall: 0.66,
-        f1: 0.62,
-        auc: 0.83,
-      },
-    },
-  ],
-  riskNotes:
-    "Single-bank bias risk: may generalize poorly outside Bank B's population.",
-  monitoring: "Monitor drift + fairness; compare against global model regularly.",
 };
 
 function ModelCardSlideFrame({
@@ -149,13 +166,16 @@ function ModelCardSlideFrame({
 }
 
 export function ModelCardSlide() {
-  return <ModelCardSlideFrame subtitle="Global model" model={GLOBAL_MODEL} />;
+  return (
+    <ModelCardSlideFrame subtitle="Federated model (FedAvg)" model={FEDERATED_MODEL} />
+  );
 }
 
-export function ModelCardSlideBankA() {
-  return <ModelCardSlideFrame subtitle="Local model (Bank A)" model={BANK_A_MODEL} />;
-}
-
-export function ModelCardSlideBankB() {
-  return <ModelCardSlideFrame subtitle="Local model (Bank B)" model={BANK_B_MODEL} />;
+export function ModelCardSlideWeighted() {
+  return (
+    <ModelCardSlideFrame
+      subtitle="Federated model (weighted aggregation)"
+      model={FEDERATED_WEIGHTED_MODEL}
+    />
+  );
 }
