@@ -163,7 +163,7 @@ export function ModelCard({
 
   const summary = (
     <div className="grid gap-3 sm:grid-cols-3">
-      <div className="space-y-1 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900/70">
+      {/* <div className="space-y-1 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900/70">
         <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Size &amp; complexity
         </div>
@@ -184,7 +184,7 @@ export function ModelCard({
         <p className="text-xs text-zinc-600 dark:text-zinc-300">
           {model.lastTrained} · {model.infra}
         </p>
-      </div>
+      </div> */}
       <div className="space-y-1 rounded-xl bg-zinc-50 p-3 text-[11px] dark:bg-zinc-900/70 sm:col-span-3">
         <div className="font-medium uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
           Architecture (simplified)
