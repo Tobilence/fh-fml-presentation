@@ -81,11 +81,6 @@ export default function Home() {
                   stakeholders.
                 </p>
               </div>
-              <div className="rounded-2xl border border-dashed border-zinc-300/80 bg-zinc-50/60 p-3 text-[11px] dark:border-zinc-700/80 dark:bg-zinc-900/60">
-                Typical banking use cases: fraud/anomaly detection, credit risk
-                signals, AML pattern detection, churn, and operational
-                forecasting.
-              </div>
             </div>
           </div>
         </div>

@@ -82,7 +82,7 @@ const FEDERATED_MODEL: ModelCardData = {
   monitoring: "Track drift + fairness metrics per bank and per subgroup.",
 };
 
-const FEDERATED_WEIGHTED_MODEL: ModelCardData = {
+const EACH_BANK_LOCAL: ModelCardData = {
   ...FEDERATED_MODEL,
   variant: "Federated (weighted)",
   technical: {
@@ -102,16 +102,16 @@ const FEDERATED_WEIGHTED_MODEL: ModelCardData = {
     {
       label: "before",
       performance: {
-        accuracy: 0.832307,
-        precision: 0.740026,
-        recall: 0.499547,
-        f1: 0.59646,
-        auc: 0.867154,
+        accuracy: 0.81,
+        precision: 0.73,
+        recall: 0.33,
+        f1: 0.44,
+        auc: 0.85
       },
       fairnessGaps: {
-        selection_rate_gap: 0.135351,
-        TPR_gap: 0.040622,
-        FPR_gap: 0.052252,
+        selection_rate_gap: 0.10,
+        TPR_gap: 0.05,
+        FPR_gap: 0.04,
       },
     },
     {
@@ -175,8 +175,8 @@ export function ModelCardSlide() {
 export function ModelCardSlideWeighted() {
   return (
     <ModelCardSlideFrame
-      subtitle="Federated model (weighted aggregation)"
-      model={FEDERATED_WEIGHTED_MODEL}
+      subtitle="Local Banks Model (each seperate)" 
+      model={EACH_BANK_LOCAL}
     />
   );
 }
