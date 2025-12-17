@@ -1,5 +1,6 @@
 import React from "react";
-import { ModelCard, type ModelCardData } from "../model-cards/ModelCard";
+// import { ModelCard, type ModelCardData } from "../model-cards/ModelCard";
+import { ModelCard, type ModelCardData } from "../model-cards/ModelCardSmall";
 
 const FEDERATED_MODEL: ModelCardData = {
   name: "Federated Neural Network",

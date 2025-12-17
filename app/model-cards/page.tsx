@@ -1,5 +1,6 @@
 
-import { ModelCard, type ModelCardData } from "./ModelCard";
+// import { ModelCard, type ModelCardData } from "./ModelCard";
+import { ModelCard, type ModelCardData } from "./ModelCardSmall";
 
 const models: ModelCardData[] = [
   {
@@ -464,7 +465,7 @@ export default function ModelCardsPage() {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="flex flex-wrap gap-5 items-start">
           {models.map((model) => (
             <ModelCard key={model.name} model={model} />
           ))}
