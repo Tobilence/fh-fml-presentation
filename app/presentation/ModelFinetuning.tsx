@@ -121,8 +121,12 @@ export function ModelFinetuning() {
                   <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-200">
                     Takeaway
                   </div>
-                  <div className="mt-2 leading-relaxed">
-                    Best config selected — used as the evaluation reference.
+                  <div className="mt-2 space-y-1.5 leading-relaxed">
+                    <p>Best config selected — used as the evaluation reference.</p>
+                    <p>
+                      This configuration performed consistently well across both centralized and federated setups, making it our
+                      standard for further model comparisons.
+                    </p>
                   </div>
                 </div>
               </div>
