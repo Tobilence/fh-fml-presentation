@@ -9,6 +9,7 @@ import { ModelCardSlide, ModelCardSlideWeighted } from "./ModelCardSlide";
 import { ShapSlide } from "./ShapSlide";
 import { TakeawaysRecommendationSlide } from "./TakeawaysRecommendationSlide";
 import { NextStepsSlide } from "./NextStepsSlide";
+import { NextStepsApproachSlide } from "./NextStepsApproachSlide";
 
 export type PresentationSlideDefinition = Readonly<{
   status: number;
@@ -29,4 +30,5 @@ export const PRESENTATION_SLIDES: ReadonlyArray<PresentationSlideDefinition> = [
   { status: 8, title: "Federated learning (pros/cons)", Component: FederatedLearningSlide },
   { status: 9, title: "Takeaways / recommendation", Component: TakeawaysRecommendationSlide },
   { status: 10, title: "Next steps", Component: NextStepsSlide },
+  { status: 11, title: "Next steps (approach & support)", Component: NextStepsApproachSlide },
 ];

@@ -22,16 +22,21 @@ export function ModelFinetuning() {
                   <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
                     Grid search (hyperparameters)
                   </div>
-                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-                    <li>
-                      We ran a <span className="font-medium text-zinc-900 dark:text-zinc-50">grid search</span> to find strong
-                      training + regularization settings.
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        We ran a <span className="font-medium text-zinc-900 dark:text-zinc-50">grid search</span> to find
+                        strong training + regularization settings.
+                      </span>
                     </li>
-                    <li>
-                      Tuned: learning rate, epochs, batch size, network depth/width, dropout, weight decay.
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>Tuned: learning rate, epochs, batch size, network depth/width, dropout, weight decay.</span>
                     </li>
-                    <li>
-                      Selection: consistent split, same metric, prefer stable configs (not just a single lucky peak).
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>Selection: consistent split, same metric, prefer stable configs (not just a single lucky peak).</span>
                     </li>
                   </ul>
                 </div>
@@ -40,19 +45,30 @@ export function ModelFinetuning() {
                   <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
                     Centralized baselines (for comparison)
                   </div>
-                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-                    <li>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">Per-bank models:</span> each bank tuned and
-                      trained on its own dataset.
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        <span className="font-medium text-zinc-900 dark:text-zinc-50">Per-bank models:</span> each bank tuned
+                        and trained on its own dataset.
+                      </span>
                     </li>
-                    <li>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">Combined model (all banks):</span> we also
-                      trained a model on the full pooled dataset as a centralized reference.
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        <span className="font-medium text-zinc-900 dark:text-zinc-50">Combined model (all banks):</span> we also
+                        trained a model on the full pooled dataset as a centralized reference.
+                      </span>
                     </li>
-                    <li>
-                      We shortlisted top configurations and{" "}
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">validated them in the federated setup</span>{" "}
-                      to confirm stability across non-identical client data.
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        We shortlisted top configurations and{" "}
+                        <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                          validated them in the federated setup
+                        </span>{" "}
+                        to confirm stability across non-identical client data.
+                      </span>
                     </li>
                   </ul>
                 </div>

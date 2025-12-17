@@ -47,15 +47,24 @@ export function DataExplorationSlide() {
             <p className="mt-2 max-w-full text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
               Explore how the data differs across banks. Pay special attention to the following distributional differences:
             </p>
-            <ul className="ml-5 mt-2 list-disc text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
-              <li>
-                <strong>Gender</strong> is unevenly distributed (males are advantaged).
+            <ul className="mt-2 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              <li className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                <span>
+                  <strong>Gender</strong> is unevenly distributed (males are advantaged).
+                </span>
               </li>
-              <li>
-                <strong>Education</strong> is split unevenly across banks (Bank A is much more educated).
+              <li className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                <span>
+                  <strong>Education</strong> is split unevenly across banks (Bank A is much more educated).
+                </span>
               </li>
-              <li>
-                <strong>Race</strong>: Whites are privileged and overrepresented in all banks.
+              <li className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                <span>
+                  <strong>Race</strong>: Whites are privileged and overrepresented in all banks.
+                </span>
               </li>
             </ul>
           </div>

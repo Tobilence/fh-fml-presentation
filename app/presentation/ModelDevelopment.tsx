@@ -21,21 +21,26 @@ export function ModelDevelopment() {
                   <div className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
                     Training setup
                   </div>
-                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-zinc-600 dark:text-zinc-300">
-                    <li>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                        Centralized (per bank):
-                      </span>{" "}
-                      each bank trains on its own data only.
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                          Centralized (per bank):
+                        </span>{" "}
+                        each bank trains on its own data only.
+                      </span>
                     </li>
-                    <li>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                        Federated:
-                      </span>{" "}
-                      banks train locally and share model updates (not raw data) to learn a global model.
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>
+                        <span className="font-medium text-zinc-900 dark:text-zinc-50">Federated:</span> banks train locally
+                        and share model updates (not raw data) to learn a global model.
+                      </span>
                     </li>
-                    <li>
-                      Identical preprocessing and evaluation protocol to ensure an apples-to-apples comparison.
+                    <li className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-zinc-300 dark:bg-zinc-600" />
+                      <span>Identical preprocessing and evaluation protocol to ensure an apples-to-apples comparison.</span>
                     </li>
                   </ul>
                 </div>
