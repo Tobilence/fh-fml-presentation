@@ -98,16 +98,33 @@ export type ModelCardLayout = "stacked" | "horizontal";
 export function ModelCard({
   model,
   layout = "stacked",
+  beforeAfterEnabled: controlledBeforeAfterEnabled,
+  onBeforeAfterEnabledChange,
+  showBeforeAfterToggle = true,
 }: {
   model: ModelCardData;
   layout?: ModelCardLayout;
+  /**
+   * Controlled "before vs after postprocessing" toggle.
+   * If omitted, the component manages its own state.
+   */
+  beforeAfterEnabled?: boolean;
+  onBeforeAfterEnabledChange?: (enabled: boolean) => void;
+  /** Hide the per-card toggle (useful when a slide provides a single global toggle). */
+  showBeforeAfterToggle?: boolean;
 }) {
   const [validationIndex, setValidationIndex] = React.useState(0);
-  const [beforeAfterEnabled, setBeforeAfterEnabled] = React.useState(false);
+  const [uncontrolledBeforeAfterEnabled, setUncontrolledBeforeAfterEnabled] =
+    React.useState(false);
   const [fairnessPostprocessingEnabled, setFairnessPostprocessingEnabled] =
     React.useState(false);
   const beforeAfterSwitchId = React.useId();
   const fairnessSwitchId = React.useId();
+
+  const beforeAfterEnabled =
+    controlledBeforeAfterEnabled ?? uncontrolledBeforeAfterEnabled;
+  const setBeforeAfterEnabled =
+    onBeforeAfterEnabledChange ?? setUncontrolledBeforeAfterEnabled;
 
   const maxValidations = model.validations.length;
   const hasBeforeAfterSnapshots =
@@ -210,7 +227,7 @@ export function ModelCard({
           Validation metrics
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          {hasBeforeAfterSnapshots ? (
+          {hasBeforeAfterSnapshots && showBeforeAfterToggle ? (
             <div style={{ display: "flex", alignItems: "center" }}>
               <label
                 className="Label"
@@ -253,7 +270,7 @@ export function ModelCard({
       </div>
 
       {hasPerformance && selectedValidation.performance ? (
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3">
           {[
             {
               label: "Accuracy (avg)",
@@ -401,9 +418,9 @@ export function ModelCard({
   if (layout === "horizontal") {
     return (
       <article
-        className={`${baseClassName} grid gap-5 md:grid-cols-[minmax(0,1.25fr)_minmax(0,0.9fr)] md:items-start`}
+        className={`${baseClassName} w-full`}
       >
-        <div className="min-w-0">{metrics}</div>
+        <div className="min-w-0 w-full">{metrics}</div>
       </article>
     );
   }

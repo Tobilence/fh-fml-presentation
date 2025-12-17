@@ -1,4 +1,23 @@
-const modelMetrics = [
+export type ModelMetricsSnapshot = {
+  accuracy: number;
+  precision: number;
+  recall: number;
+  f1: number;
+  auc: number;
+  target_shuffling_p: number;
+  selection_rate_gap: number;
+  TPR_gap: number;
+  FPR_gap: number;
+};
+
+export type ModelMetricsEntry = {
+  label: string;
+  description: string;
+  beforePreprocessing: ModelMetricsSnapshot;
+  afterPreprocessing: ModelMetricsSnapshot;
+};
+
+export const modelMetrics: ModelMetricsEntry[] = [
     {
         "label": "Local Model (each bank seperate)",
         "description": "Three models trained on each bank's data separately.",
@@ -77,4 +96,4 @@ const modelMetrics = [
             "FPR_gap": 0.043
         },
     }
-]
+];

@@ -1,144 +1,76 @@
+"use client";
+
 import React from "react";
+import { Switch } from "radix-ui";
 // import { ModelCard, type ModelCardData } from "../model-cards/ModelCard";
 import { ModelCard, type ModelCardData } from "../model-cards/ModelCardSmall";
+import { modelMetrics } from "./model_metrics";
 
-const FEDERATED_MODEL: ModelCardData = {
-  name: "Federated Neural Network",
-  variant: "Federated (FedAvg)",
-  status: "Active",
-  stage: "Production-like",
-  owner: "FML Team",
-  type: "Binary classification",
-  size: "Tabular NN · 2 hidden layers",
-  trainingWindow: "Historical dataset (banks A–C)",
-  lastTrained: "Recently",
-  infra: "Local / demo",
-  description:
-    "A federated neural network trained across multiple banks without sharing raw data.",
-  architecture: [
-    "Input: tabular features",
-    "Dense(32) + ReLU",
-    "Dense(32) + ReLU",
-    "Dense(1) + Sigmoid",
-  ],
-  metrics: [
-    { label: "Primary metric", value: "Recall" },
-    { label: "Secondary metric", value: "Precision" },
-  ],
-  technical: {
-    framework: "TensorFlow / Keras",
-    loss: "binary_crossentropy",
-    optimizer: "adam",
-    learningRate: "1e-3",
-    batchSize: "512",
-    epochs: "10",
-    finalModelParams: `{
-  "aggregation": "FedAvg",
-  "epochs": 10,
-  "batch_size": 512,
-  "layer_units": [32, 32],
-  "optimizer": "adam",
-  "learning_rate": 1e-3,
-  "loss": "binary_crossentropy"
-}`,
-    preprocessing: "Standard scaling + consistent feature schema across clients.",
-    postprocessing: "Optional fairness postprocessing (demo).",
-    regularisation: "Dropout / weight decay (config dependent).",
-  },
-  validations: [
-    {
-      label: "before",
-      performance: {
-        accuracy: 0.822851,
-        precision: 0.716653,
-        recall: 0.472918,
-        f1: 0.569815,
-        auc: 0.847183,
+function toModelCardData(entry: (typeof modelMetrics)[number]): ModelCardData {
+  return {
+    name: "Neural Network",
+    variant: entry.label,
+    status: "Active",
+    stage: "Production-like",
+    owner: "FML Team",
+    type: "Binary classification",
+    size: "Tabular NN",
+    trainingWindow: "Historical dataset (banks A–C)",
+    lastTrained: "Recently",
+    infra: "Local / demo",
+    description: entry.description,
+    metrics: [
+      { label: "Primary metric", value: "Recall" },
+      { label: "Secondary metric", value: "Precision" },
+    ],
+    validations: [
+      {
+        label: "before",
+        performance: {
+          accuracy: entry.beforePreprocessing.accuracy,
+          precision: entry.beforePreprocessing.precision,
+          recall: entry.beforePreprocessing.recall,
+          f1: entry.beforePreprocessing.f1,
+          auc: entry.beforePreprocessing.auc,
+        },
+        fairnessGaps: {
+          selection_rate_gap: entry.beforePreprocessing.selection_rate_gap,
+          TPR_gap: entry.beforePreprocessing.TPR_gap,
+          FPR_gap: entry.beforePreprocessing.FPR_gap,
+        },
       },
-      fairnessGaps: {
-        selection_rate_gap: 0.122095,
-        TPR_gap: 0.041578,
-        FPR_gap: 0.043034,
+      {
+        label: "after",
+        performance: {
+          accuracy: entry.afterPreprocessing.accuracy,
+          precision: entry.afterPreprocessing.precision,
+          recall: entry.afterPreprocessing.recall,
+          f1: entry.afterPreprocessing.f1,
+          auc: entry.afterPreprocessing.auc,
+        },
+        fairnessGaps: {
+          selection_rate_gap: entry.afterPreprocessing.selection_rate_gap,
+          TPR_gap: entry.afterPreprocessing.TPR_gap,
+          FPR_gap: entry.afterPreprocessing.FPR_gap,
+        },
       },
-    },
-    {
-      label: "after",
-      performance: {
-        accuracy: 0.820914,
-        precision: 0.692563,
-        recall: 0.500151,
-        f1: 0.580837,
-        auc: 0.847183,
-      },
-      fairnessGaps: {
-        selection_rate_gap: 0.122095,
-        TPR_gap: 0.041578,
-        FPR_gap: 0.043034,
-      },
-    },
-  ],
-  fairness: "Fairness analysed separately (overall metrics shown here).",
-  riskNotes: "Demo content — replace with real risks and mitigations.",
-  monitoring: "Track drift + fairness metrics per bank and per subgroup.",
-};
-
-const EACH_BANK_LOCAL: ModelCardData = {
-  ...FEDERATED_MODEL,
-  variant: "Federated (weighted)",
-  technical: {
-    ...FEDERATED_MODEL.technical,
-    finalModelParams: `{
-  "aggregation": "Weighted FedAvg",
-  "aggregation_weights": "by client sample size",
-  "epochs": 10,
-  "batch_size": 512,
-  "layer_units": [32, 32],
-  "optimizer": "adam",
-  "learning_rate": 1e-3,
-  "loss": "binary_crossentropy"
-}`,
-  },
-  validations: [
-    {
-      label: "before",
-      performance: {
-        accuracy: 0.81,
-        precision: 0.73,
-        recall: 0.33,
-        f1: 0.44,
-        auc: 0.85
-      },
-      fairnessGaps: {
-        selection_rate_gap: 0.10,
-        TPR_gap: 0.05,
-        FPR_gap: 0.04,
-      },
-    },
-    {
-      label: "after",
-      performance: {
-        accuracy: 0.831895,
-        precision: 0.737677,
-        recall: 0.500302,
-        f1: 0.596232,
-        auc: 0.867154,
-      },
-      fairnessGaps: {
-        selection_rate_gap: 0.135351,
-        TPR_gap: 0.040622,
-        FPR_gap: 0.052252,
-      },
-    },
-  ],
-};
+    ],
+    fairness: "Fairness gaps shown as subgroup deltas (M/F).",
+    riskNotes: "Demo content — replace with real risks and mitigations.",
+    monitoring: "Track drift + fairness metrics per bank and per subgroup.",
+  };
+}
 
 function ModelCardSlideFrame({
   subtitle,
-  model,
 }: {
   subtitle: string;
-  model: ModelCardData;
 }) {
+  const models = modelMetrics.map(toModelCardData);
+  const [afterPostprocessingEnabled, setAfterPostprocessingEnabled] =
+    React.useState(false);
+  const afterSwitchId = React.useId();
+
   return (
     <section className="w-full py-3 sm:py-4">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
@@ -149,15 +81,51 @@ function ModelCardSlideFrame({
                 Documentation · Transparency
               </div>
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-                Model card
+                Model comparison
               </h2>
-              <div className="text-sm text-zinc-600 dark:text-zinc-300">
-                {subtitle}
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="text-sm text-zinc-600 dark:text-zinc-300">
+                  {subtitle}
+                </div>
+                <div className="flex items-center gap-3">
+                  <label
+                    className="Label text-sm text-zinc-600 dark:text-zinc-300"
+                    htmlFor={afterSwitchId}
+                  >
+                    After postprocessing
+                  </label>
+                  <Switch.Root
+                    className="SwitchRoot"
+                    id={afterSwitchId}
+                    checked={afterPostprocessingEnabled}
+                    onCheckedChange={setAfterPostprocessingEnabled}
+                  >
+                    <Switch.Thumb className="SwitchThumb" />
+                  </Switch.Root>
+                </div>
               </div>
             </header>
 
-            <div className="mt-6 flex-1">
-              <ModelCard model={model} layout="horizontal" />
+            <div className="mt-6 grid flex-1 gap-4 md:grid-cols-3">
+              {models.map((model) => (
+                <div key={model.variant} className="flex flex-col gap-2">
+                  <div>
+                    <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-50">
+                      {model.variant}
+                    </div>
+                    <div className="text-xs text-zinc-600 dark:text-zinc-300">
+                      {model.description}
+                    </div>
+                  </div>
+                  <ModelCard
+                    model={model}
+                    layout="horizontal"
+                    beforeAfterEnabled={afterPostprocessingEnabled}
+                    onBeforeAfterEnabledChange={setAfterPostprocessingEnabled}
+                    showBeforeAfterToggle={false}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -168,15 +136,11 @@ function ModelCardSlideFrame({
 
 export function ModelCardSlide() {
   return (
-    <ModelCardSlideFrame subtitle="Federated model (FedAvg)" model={FEDERATED_MODEL} />
+    <ModelCardSlideFrame subtitle="Compare all three training modes (before vs after postprocessing)" />
   );
 }
 
 export function ModelCardSlideWeighted() {
-  return (
-    <ModelCardSlideFrame
-      subtitle="Local Banks Model (each seperate)" 
-      model={EACH_BANK_LOCAL}
-    />
-  );
+  // Backwards compatible export (used by the slide controller statuses 5/6).
+  return <ModelCardSlide />;
 }
