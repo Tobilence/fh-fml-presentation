@@ -4,7 +4,7 @@ export function ModelEvaluationSection() {
             <div className="space-y-4 max-w-none">
                 <div className="space-y-3">
                     <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        5 · Evaluation
+                        4 · Evaluation
                     </h2>
 
 

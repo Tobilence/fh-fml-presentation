@@ -3,7 +3,7 @@ export function ModelDevelopmentSection() {
         <section className="border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
             <div className="space-y-4">
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    3 · Model Development
+                    2 · Model Development
                 </h2>
                 <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                     A consistent feature pipeline and evaluation protocol were used to

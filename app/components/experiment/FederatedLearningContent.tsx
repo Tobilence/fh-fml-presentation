@@ -3,7 +3,7 @@ export function FederatedLearningContent() {
         <section className="w-full border-t border-zinc-200/80 pt-8 dark:border-zinc-800/80">
             <div className="space-y-4">
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    6 · Federated Machine Learning (FL)
+                    5 · Federated Machine Learning (FL)
                 </h2>
 
                 <div className="space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">

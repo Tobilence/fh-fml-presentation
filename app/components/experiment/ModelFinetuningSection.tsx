@@ -6,7 +6,7 @@ export function ModelFinetuningSection() {
             <div className="space-y-4 max-w-none">
                 <div className="space-y-3">
                     <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                        4 · Model Finetuning
+                        3 · Model Finetuning
                     </h2>
                     <div className="space-y-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                         <p>

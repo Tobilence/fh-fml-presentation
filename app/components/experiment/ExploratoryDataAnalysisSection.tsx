@@ -39,7 +39,7 @@ export function ExploratoryDataAnalysisSection() {
         <section className="flex flex-col gap-8">
             <div className="space-y-4 text-xs text-zinc-700 sm:text-sm dark:text-zinc-200">
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    2 · Exploratory Data Analysis
+                    1 · Exploratory Data Analysis
                 </h2>
                 <div className="space-y-3">
                     <p>
