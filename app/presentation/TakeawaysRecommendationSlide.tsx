@@ -14,10 +14,7 @@ export function TakeawaysRecommendationSlide() {
                 Takeaways 
               </h2>
               <p className="max-w-4xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-base">
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">Rule of thumb:</span> start with{" "}
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">local per-bank models</span>. If you can justify the additional complexity (and risk controls), move to{" "}
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">federated learning</span>. Avoid a fully{" "}
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">combined</span> approach due to bias + compliance friction.
+              <span>Depending on resources and priorities, we recommend either centralized models per bank or federated learning.</span>
               </p>
             </header>
 

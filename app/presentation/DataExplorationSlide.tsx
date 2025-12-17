@@ -34,7 +34,7 @@ export function DataExplorationSlide() {
   );
 
   const [dataset, setDataset] = React.useState<Dataset>("Overall");
-  const [split, setSplit] = React.useState<DataUnderstandingSplit>("Education");
+  const [split, setSplit] = React.useState<DataUnderstandingSplit>("Gender");
 
   return (
     <section className="w-full py-8 sm:py-10">

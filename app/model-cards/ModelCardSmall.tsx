@@ -159,14 +159,17 @@ export function ModelCard({
         </p>
       </div>
       <div className="flex flex-wrap gap-2 text-[11px]">
-        <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-100">
-          {model.status}
-        </span>
+        {model.status.toLowerCase() === "recommended" ? (
+          <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 font-medium text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-100">
+            {model.status}
+          </span>
+        ) : (
+          <span className="rounded-full bg-red-500/10 px-2 py-0.5 font-medium text-red-700 dark:bg-red-500/15 dark:text-red-100">
+            {model.status}
+          </span>
+        )}
         <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
           {model.stage}
-        </span>
-        <span className="rounded-full bg-sky-500/10 px-2 py-0.5 text-[11px] font-medium text-sky-700 dark:bg-sky-500/15 dark:text-sky-100">
-          {model.variant}
         </span>
       </div>
     </div>
@@ -426,7 +429,7 @@ export function ModelCard({
   }
 
   return (
-    <article className={`${baseClassName} flex flex-col gap-4`}>
+    <article className={`${baseClassName} flex flex-col gap-4 w-full sm:w-[380px]`}>
       {header}
       {metrics}
       {technicalDetails}

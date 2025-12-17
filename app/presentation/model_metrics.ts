@@ -13,6 +13,8 @@ export type ModelMetricsSnapshot = {
 export type ModelMetricsEntry = {
   label: string;
   description: string;
+  status: string;
+  variant: string;
   beforePreprocessing: ModelMetricsSnapshot;
   afterPreprocessing: ModelMetricsSnapshot;
 };
@@ -21,6 +23,8 @@ export const modelMetrics: ModelMetricsEntry[] = [
     {
         "label": "Multiple Centralized Models",
         "description": "Three models trained on each bank's data separately.",
+        "status": "Recommended",
+        "variant": "Centralized",
         "beforePreprocessing": {
             "accuracy": 0.81,
             "precision": 0.73,
@@ -47,6 +51,8 @@ export const modelMetrics: ModelMetricsEntry[] = [
     {
         "label": "Single Centralized Model",
         "description": "A local model trained on all banks' data combined.",
+        "status": "needs improvement",
+        "variant": "Centralized",
         "beforePreprocessing": {
             "accuracy": 0.76,
             "precision": 0.60,
@@ -73,6 +79,8 @@ export const modelMetrics: ModelMetricsEntry[] = [
     {
         "label": "Federated Model",
         "description": "A federated model trained on all banks' data together.",
+        "status": "Recommended",
+        "variant": "Federated",
         "beforePreprocessing": {
             "accuracy": 0.83,
             "precision": 0.74,
