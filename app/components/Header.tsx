@@ -10,7 +10,7 @@ import Logo from "../logo.png";
 const navItems = [
   { href: "/", label: "Overview" },
   { href: "/experiment", label: "Experiment" },
-  { href: "/model-cards", label: "Model cards" },
+  // { href: "/model-cards", label: "Model cards" },
   { href: "/presentation", label: "Presentation" },
 ];
 

@@ -4,7 +4,7 @@ import { ExploratoryDataAnalysisSection } from "@/app/components/experiment/Expl
 import { FederatedLearningContent } from "@/app/components/experiment/FederatedLearningContent";
 import { ModelDevelopmentSection } from "@/app/components/experiment/ModelDevelopmentSection";
 import { ModelFinetuningSection } from "@/app/components/experiment/ModelFinetuningSection";
-import { ModelEvaluationSection } from "@/app/components/experiment/ModelEvaluationSection";
+import { ModelCardExperimentSection } from "../components/experiment/ModelCardExperimentSection";
 
 export default function ExperimentPage() {
     return (
@@ -27,7 +27,8 @@ export default function ExperimentPage() {
 
             <ModelFinetuningSection />
 
-            <ModelEvaluationSection />
+            {/* <ModelEvaluationSection /> */}
+            <ModelCardExperimentSection />
 
             <FederatedLearningContent />
 
