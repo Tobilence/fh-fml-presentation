@@ -234,7 +234,7 @@ export function ModelCard({
                 htmlFor={beforeAfterSwitchId}
                 style={{ paddingRight: 15 }}
               >
-                After postprocessing
+                Fairness Postprocessing
               </label>
               <Switch.Root
                 className="SwitchRoot"

@@ -23,12 +23,8 @@ export const PRESENTATION_SLIDES: ReadonlyArray<PresentationSlideDefinition> = [
   { status: 2, title: "Experiment setup", Component: ModelDevelopment },
   { status: 3, title: "Model finetuning", Component: ModelFinetuning },
   { status: 4, title: "Model comparison", Component: ModelCardSlide },
-  { status: 5, title: "Model comparison", Component: ModelCardSlideWeighted },
-  // Kept to avoid "No slide" if an older controller still emits status=6.
-  { status: 6, title: "Model comparison", Component: ModelCardSlideWeighted },
-  { status: 7, title: "SHAP (explainability)", Component: ShapSlide },
-  { status: 8, title: "Federated learning (pros/cons)", Component: FederatedLearningSlide },
-  { status: 9, title: "Takeaways / recommendation", Component: TakeawaysRecommendationSlide },
-  { status: 10, title: "Next steps", Component: NextStepsSlide },
-  { status: 11, title: "Next steps (approach & support)", Component: NextStepsApproachSlide },
+  { status: 5, title: "SHAP (explainability)", Component: ShapSlide },
+  { status: 6, title: "Federated learning (pros/cons)", Component: FederatedLearningSlide },
+  { status: 7, title: "Takeaways / recommendation", Component: TakeawaysRecommendationSlide },
+  { status: 8, title: "Next steps", Component: NextStepsSlide },
 ];

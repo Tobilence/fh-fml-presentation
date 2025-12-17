@@ -19,7 +19,7 @@ export type ModelMetricsEntry = {
 
 export const modelMetrics: ModelMetricsEntry[] = [
     {
-        "label": "Local Model (each bank seperate)",
+        "label": "Multiple Centralized Models",
         "description": "Three models trained on each bank's data separately.",
         "beforePreprocessing": {
             "accuracy": 0.81,
@@ -45,7 +45,7 @@ export const modelMetrics: ModelMetricsEntry[] = [
         }
     },
     {
-        "label": "Local Model (combined)",
+        "label": "Single Centralized Model",
         "description": "A local model trained on all banks' data combined.",
         "beforePreprocessing": {
             "accuracy": 0.76,
@@ -71,7 +71,7 @@ export const modelMetrics: ModelMetricsEntry[] = [
         }
     },
     {
-        "label": "Federated Model (FedAvg)",
+        "label": "Federated Model",
         "description": "A federated model trained on all banks' data together.",
         "beforePreprocessing": {
             "accuracy": 0.83,

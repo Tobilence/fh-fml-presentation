@@ -81,7 +81,7 @@ function ModelCardSlideFrame({
                 Documentation · Transparency
               </div>
               <h2 className="text-pretty text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-                Model comparison
+                Final Evaluation
               </h2>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="text-sm text-zinc-600 dark:text-zinc-300">
@@ -136,7 +136,7 @@ function ModelCardSlideFrame({
 
 export function ModelCardSlide() {
   return (
-    <ModelCardSlideFrame subtitle="Compare all three training modes (before vs after postprocessing)" />
+    <ModelCardSlideFrame subtitle="Compare all three final models (before and after fairness postprocessing)" />
   );
 }
 
