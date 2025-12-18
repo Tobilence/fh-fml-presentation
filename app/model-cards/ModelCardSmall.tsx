@@ -90,7 +90,7 @@ function clampIndex(index: number, max: number) {
 
 function formatMetric(value: number) {
   // show as percentage with 1 decimal (e.g. 87.3%) if looks like [0,1]
-  if (value >= 0 && value <= 1) return `${(value * 100).toFixed(1)}%`;
+  if (value >= 0 && value <= 1) return `${(value * 100).toFixed(1)}`;
   return value.toFixed(3);
 }
 
@@ -277,7 +277,7 @@ export function ModelCard({
         <div className="grid grid-cols-2 gap-3">
           {[
             {
-              label: "Accuracy (avg)",
+              label: "Accuracy (avg) %",
               value: formatMetric(selectedValidation.performance.accuracy),
             },
             {
