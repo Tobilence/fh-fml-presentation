@@ -6,7 +6,7 @@ import { createBrowserSupabaseClient } from "@/utils/supabase/client";
 import { PRESENTATION_SLIDES } from "./slides";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
-const PRESENTATION_LIVE_TYPE = "presentation-live";
+const PRESENTATION_LIVE_TYPE = "presentation-live-fr";
 const POLL_INTERVAL_MS = 2000;
 
 export default function PresentationPage() {
@@ -19,7 +19,7 @@ export default function PresentationPage() {
     const slide = PRESENTATION_SLIDES.find((entry) => entry.status === status);
     if (slide) return <slide.Component />;
 
-    return <div>No slide to show for status {String(status)}.</div>;
+    return <div>Loading...</div>;
   }, [status]);
 
   useEffect(() => {
