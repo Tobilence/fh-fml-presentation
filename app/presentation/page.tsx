@@ -6,7 +6,7 @@ import { createBrowserSupabaseClient } from "@/utils/supabase/client";
 import { PRESENTATION_SLIDES } from "./slides";
 
 const PRESENTATION_STAGE_TABLE = "live_presentation";
-const PRESENTATION_LIVE_TYPE = "presentation-live-fr";
+const PRESENTATION_LIVE_TYPE = "presentation-live";
 const POLL_INTERVAL_MS = 2000;
 
 export default function PresentationPage() {
