@@ -67,10 +67,9 @@ const models: ModelCardData[] = modelMetrics.map((entry) => ({
     batchSize: "512",
     epochs: "10",
     preprocessing:
-      "Impute missing values, cap outliers at P99, standardise numeric features, target‑encode high‑cardinality categoricals.",
+      entry.technical.preprocessing,
     postprocessing:
-      "Optional fairness postprocessing (threshold adjustment) can be enabled for evaluation.",
-    regularisation: "Early stopping on validation AUC.",
+    entry.technical.postprocessing
   },
   fairness:
     "Fairness review completed; adjustments made for equalized odds and TPR parity.",

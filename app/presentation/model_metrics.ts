@@ -10,6 +10,18 @@ export type ModelMetricsSnapshot = {
   FPR_gap: number;
 };
 
+export type ModelTechnicalDetails = {
+  framework: string;
+  loss: string;
+  optimizer: string;
+  learningRate: string;
+  batchSize: string;
+  epochs: string;
+  layers: string;
+  preprocessing: string;
+  postprocessing: string;
+};
+
 export type ModelMetricsEntry = {
   label: string;
   description: string;
@@ -17,6 +29,7 @@ export type ModelMetricsEntry = {
   variant: string;
   beforePreprocessing: ModelMetricsSnapshot;
   afterPreprocessing: ModelMetricsSnapshot;
+  technical: ModelTechnicalDetails;
 };
 
 export const modelMetrics: ModelMetricsEntry[] = [
@@ -46,6 +59,17 @@ export const modelMetrics: ModelMetricsEntry[] = [
             "selection_rate_gap": 0.14,
             "TPR_gap": 0.00,
             "FPR_gap": 0.07
+        },
+        technical: {
+            "framework": "TensorFlow",
+            "loss": "Binary Crossentropy",
+            "layers": "(128, 64, 32)",
+            "optimizer": "Adam",
+            "learningRate": "0.0005",
+            "batchSize": "512",
+            "epochs": "20",
+            "preprocessing": "Binning, One Hot Encoding, Standardization",
+            "postprocessing": "Postprocessing to improve gender fairness",
         }
     },
     {
@@ -74,6 +98,17 @@ export const modelMetrics: ModelMetricsEntry[] = [
             "selection_rate_gap": 0.13,
             "TPR_gap": 0.04,
             "FPR_gap": 0.05
+        },
+        technical: {
+            "framework": "TensorFlow",
+            "loss": "Binary Crossentropy",
+            "layers": "(128, 64, 32)",
+            "optimizer": "Adam",
+            "learningRate": "0.0005",
+            "batchSize": "512",
+            "epochs": "20",
+            "preprocessing": "Binning, One Hot Encoding, Standardization",
+            "postprocessing": "Postprocessing to improve gender fairness",
         }
     },
     {
@@ -103,5 +138,16 @@ export const modelMetrics: ModelMetricsEntry[] = [
             "TPR_gap": 0.001,
             "FPR_gap": 0.043
         },
+        technical: {
+            "framework": "TensorFlow",
+            "loss": "Binary Crossentropy",
+            "layers": "(128, 64, 32)",
+            "optimizer": "Adam",
+            "learningRate": "0.0005",
+            "batchSize": "512",
+            "epochs": "20",
+            "preprocessing": "Binning, One Hot Encoding, Standardization",
+            "postprocessing": "Postprocessing to improve gender fairness",
+        }
     }
 ];

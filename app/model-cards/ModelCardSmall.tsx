@@ -17,6 +17,7 @@ export type ModelTechnicalDetails = {
   learningRate?: string;
   batchSize?: string;
   epochs?: string;
+  layers?: string;
   preprocessing?: string;
   postprocessing?: string;
   regularisation?: string;
@@ -369,6 +370,14 @@ export function ModelCard({
         </div>
         <div className="flex justify-between gap-4">
           <span className="text-zinc-500 dark:text-zinc-400">
+            Architecture
+          </span>
+          <span className="text-right">
+          {model.technical?.layers}
+          </span>
+        </div>
+        <div className="flex justify-between gap-4">
+          <span className="text-zinc-500 dark:text-zinc-400">
             Optimiser / LR
           </span>
           <span className="text-right">
@@ -401,14 +410,6 @@ export function ModelCard({
           <div className="text-zinc-500 dark:text-zinc-400">Postprocessing</div>
           <p className="mt-0.5 leading-relaxed">
             {model.technical?.postprocessing}
-          </p>
-        </div>
-        <div className="mt-1">
-          <div className="text-zinc-500 dark:text-zinc-400">
-            Regularisation
-          </div>
-          <p className="mt-0.5 leading-relaxed">
-            {model.technical?.regularisation}
           </p>
         </div>
       </div>
